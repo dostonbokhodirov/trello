@@ -2,13 +2,35 @@ package uz.elmurodov.repository;
 
 import lombok.SneakyThrows;
 import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.dtos.GenericBaseDto;
+import uz.elmurodov.dtos.GenericDto;
 import uz.elmurodov.exception.CustomerSQLException;
-import uz.elmurodov.utils.BaseUtils;
+import uz.elmurodov.security.Auditable;
 
 import java.io.Serializable;
 import java.sql.*;
+import java.util.List;
 
-public class BaseRepository {
+public abstract class BaseRepository<
+        CR extends GenericBaseDto,
+        D extends GenericDto,
+        E extends Auditable,
+        K, B extends Serializable> {
+    public abstract K create(CR dto);
+
+    public abstract B block(D dto);
+
+    public abstract B unblock(D dto);
+
+    public abstract B update(D dto);
+
+    public abstract B delete(D dto);
+
+    public abstract E get(K id);
+
+    public abstract List<E> list(K id);
+
+
     protected Connection connection = UNIContainer.getBean(Connection.class);
     private Object[] args;
 

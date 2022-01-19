@@ -2,8 +2,8 @@ package uz.elmurodov;
 
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.security.SecurityHolder;
-import uz.elmurodov.security.SessionUser;
-import uz.elmurodov.ui.AuthUserUI;
+import uz.elmurodov.security.task.Task;
+import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.Menu;
 import uz.elmurodov.ui.organization.OrganizationUI;
 import uz.jl.utils.Color;
@@ -69,11 +69,11 @@ public class Application {
             }
 
             case "ORGANIZATION_LIST" -> {
-                organizationUI.organizationList(SecurityHolder.session.getId());
+                organizationUI.list();
             }
 
             case "AUTH_USER_INFO" -> {
-                authUserUI.getAuthUserInfo(SecurityHolder.session.getId());
+                authUserUI.get();
             }
 
             case "LOGOUT" -> {
