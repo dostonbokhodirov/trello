@@ -17,13 +17,14 @@ public class Application {
     private static final OrganizationUI organizationUI = UNIContainer.getBean(OrganizationUI.class);
     private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
     private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
+
     public static void main(String[] args) {
         run();
     }
 
     private static void run() {
         Menu.getMainMenu();
-        String choice = Input.getStr("Your choice: ");
+        String choice = Input.getStr("Enter your choice: ");
         switch (choice.toUpperCase()) {
             case "LOGIN" -> {
                 authUserUI.login();
@@ -32,59 +33,44 @@ public class Application {
 
             }
             case "PROJECTS" -> {
-                projectUI.list();
+                Menu.getProjectMenu();
             }
-            case "CREATE_ORGANIZATION" -> {
+            case "EMPLOYEE_ADD" -> {
 
             }
-            case "BlOCK_ORGANIZATION" -> {
+            case "EMPLOYEE_BLOCK" -> {
 
             }
-            case "UNBLOCK_ORGANIZATION" -> {
+            case "EMPLOYEE_UNBLOCK" -> {
 
             }
-            case "UPDATE_ORGANIZATION" -> {
+            case "EMPLOYEE_DELETE" -> {
 
             }
-            case "DELETE_ORGANIZATION" -> {
+            case "EMPLOYEE_GET" -> {
 
             }
-            case "GET_ORGANIZATION" -> {
+            case "EMPLOYEE_LIST" -> {
 
             }
-            case "ORGANIZATIONS_LIST" -> {
+            case "ORGANIZATION_ADD" -> {
 
             }
-            case "CREATE_PROJECT" -> {
+            case "ORGANIZATION_BLOCK" -> {
 
             }
-            case "BlOCK_PROJECT" -> {
+            case "ORGANIZATION_UNBLOCK" -> {
 
             }
-            case "UNBLOCK_PROJECT" -> {
+            case "ORGANIZATION_DELETE" -> {
 
             }
-            case "UPDATE_PROJECT" -> {
+            case "ORGANIZATION_GET" -> {
 
             }
-            case "DELETE_PROJECT" -> {
-
-            }
-            case "GET_PROJECT" -> {
-
-            }
-            case "PROJECTS_LIST" -> {
-
-            }
-
             case "ORGANIZATION_LIST" -> {
-                organizationUI.list();
-            }
 
-            case "AUTH_USER_INFO" -> {
-                authUserUI.get();
             }
-
             case "LOGOUT" -> {
                 authUserUI.logout();
             }

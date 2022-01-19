@@ -58,4 +58,9 @@ public class AuthUserRepository extends BaseRepository<AuthUserCreateDto,
     public List<AuthUser> list() {
         return null;
     }
+
+    public Boolean isLeader(Long userId, Long projectId) {
+        prepareArguments(userId, projectId);
+        return (Boolean) callProcedure(property.get("auth.isLead"), Types.VARCHAR);
+    }
 }

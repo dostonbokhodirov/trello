@@ -64,4 +64,12 @@ public class AuthUserService extends BaseService<AuthUserRepository,
     public ResponseEntity<Data<?>> list() {
         return null;
     }
+
+    public ResponseEntity<Data<?>> isLeader(Long userId, Long projectId) {
+       try {
+           return new ResponseEntity<>(new Data<>(repository.isLeader(userId, projectId)));
+       } catch (CustomerSQLException e) {
+           return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+       }
+    }
 }

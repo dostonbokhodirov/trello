@@ -1,11 +1,12 @@
 package uz.elmurodov.ui.column;
 
+import uz.elmurodov.services.column.ColumnService;
 import uz.elmurodov.ui.BaseUI;
 
 /**
  * @author Doston Bokhodirov, Thu 12:05 AM. 1/20/2022
  */
-public class ColumnUI extends BaseUI {
+public class ColumnUI extends BaseUI<ColumnService> {
     @Override
     public void create() {
 

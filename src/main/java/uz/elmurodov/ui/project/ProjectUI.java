@@ -1,11 +1,12 @@
 package uz.elmurodov.ui.project;
 
+import uz.elmurodov.services.project.ProjectService;
 import uz.elmurodov.ui.BaseUI;
 
 /**
  * @author Doston Bokhodirov, Thu 12:04 AM. 1/20/2022
  */
-public class ProjectUI extends BaseUI {
+public class ProjectUI extends BaseUI<ProjectService> {
     @Override
     public void create() {
 

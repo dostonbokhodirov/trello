@@ -3,6 +3,7 @@ package uz.elmurodov.response;
 import lombok.Getter;
 import lombok.Setter;
 import uz.elmurodov.enums.HttpStatus;
+import uz.elmurodov.security.Auditable;
 
 /**
  * @param <D> response body type
