@@ -6,6 +6,8 @@ import uz.elmurodov.security.task.Task;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.Menu;
 import uz.elmurodov.ui.organization.OrganizationUI;
+import uz.elmurodov.ui.project.ProjectUI;
+import uz.elmurodov.ui.task.TaskUI;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
@@ -13,6 +15,8 @@ import uz.jl.utils.Print;
 public class Application {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
     private static final OrganizationUI organizationUI = UNIContainer.getBean(OrganizationUI.class);
+    private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
+    private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
     public static void main(String[] args) {
         run();
     }
@@ -23,6 +27,12 @@ public class Application {
         switch (choice.toUpperCase()) {
             case "LOGIN" -> {
                 authUserUI.login();
+            }
+            case "TASKS" -> {
+
+            }
+            case "PROJECTS" -> {
+                projectUI.list();
             }
             case "CREATE_ORGANIZATION" -> {
 

@@ -16,9 +16,9 @@ public class Menu {
         if (Objects.isNull(SecurityHolder.authUserSession)) {
             Print.println(Color.BLUE, "Login -> LOGIN");
         } else {
-            for (PermissionsItem permission : permissions) {
-                Print.println(Color.BLUE, permission.getName() + " -> " + permission.getCode());
-            }
+//            for (PermissionsItem permission : permissions) {
+//                Print.println(Color.BLUE, permission.getName() + " -> " + permission.getCode());
+//            }
             Print.println("Logout -> LOGOUT");
         }
         Print.println(Color.BLUE, "Exit -> EXIT");
