@@ -1,8 +1,8 @@
-package uz.elmurodov.security;
+package uz.elmurodov.security.auth;
 
 import com.google.gson.annotations.SerializedName;
 
-public class PermissionsItem{
+public class RolesItem{
 
 	@SerializedName("code")
 	private String code;

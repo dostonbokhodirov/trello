@@ -1,9 +1,11 @@
-package uz.elmurodov.security;
+package uz.elmurodov.security.auth;
 
 import 	java.util.List;
 import com.google.gson.annotations.SerializedName;
+import uz.elmurodov.security.Auditable;
+import uz.elmurodov.security.organization.Organization;
 
-public class SessionUser{
+public class AuthUser implements Auditable {
 
 	@SerializedName("code")
 	private String code;
@@ -33,7 +35,7 @@ public class SessionUser{
 	private Organization organization;
 
 	@SerializedName("id")
-	private int id;
+	private Long id;
 
 	@SerializedName("first_name")
 	private String firstName;
@@ -80,7 +82,7 @@ public class SessionUser{
 		return organization;
 	}
 
-	public int getId(){
+	public Long getId(){
 		return id;
 	}
 

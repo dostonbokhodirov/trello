@@ -2,14 +2,11 @@ package uz.elmurodov.container;
 
 import uz.elmurodov.property.ApplicationProperties;
 import uz.elmurodov.property.DatabaseProperties;
-import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.repository.auth.AuthUserRepository;
-import uz.elmurodov.repository.auth.AuthUserRepositoryImpl;
 import uz.elmurodov.repository.organization.OrganizationRepository;
-import uz.elmurodov.services.BaseService;
 import uz.elmurodov.services.auth.AuthUserService;
 import uz.elmurodov.services.organization.OrganizationService;
-import uz.elmurodov.ui.AuthUserUI;
+import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.organization.OrganizationUI;
 
 import java.sql.Connection;
@@ -21,7 +18,7 @@ public class UNIContainer {
     private static final ApplicationProperties APPLICATION_PROPERTIES;
     private static final DatabaseProperties DATABASE_PROPERTIES;
     private static Connection CONNECTION;
-    private final static AuthUserRepositoryImpl AUTH_USER_REPOSITORY;
+    private final static AuthUserRepository AUTH_USER_REPOSITORY;
     private final static AuthUserService AUTH_USER_SERVICE;
     private static final AuthUserUI AUTH_USER_UI;
     private static final OrganizationUI ORGANIZATION_UI;
@@ -39,7 +36,7 @@ public class UNIContainer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        AUTH_USER_REPOSITORY = new AuthUserRepositoryImpl();
+        AUTH_USER_REPOSITORY = new AuthUserRepository();
         AUTH_USER_SERVICE = new AuthUserService(AUTH_USER_REPOSITORY);
         AUTH_USER_UI = new AuthUserUI();
         ORGANIZATION_UI = new OrganizationUI();
