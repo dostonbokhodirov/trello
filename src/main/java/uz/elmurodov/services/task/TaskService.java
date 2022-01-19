@@ -42,7 +42,7 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     }
 
     @Override
-    public ResponseEntity<Data<?>> list(Long id) {
+    public ResponseEntity<Data<?>> list() {
         return null;
     }
 }

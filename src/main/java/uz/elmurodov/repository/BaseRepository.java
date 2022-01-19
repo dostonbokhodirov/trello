@@ -11,6 +11,14 @@ import java.io.Serializable;
 import java.sql.*;
 import java.util.List;
 
+/**
+ *
+ * @param <CR> -> create dto
+ * @param <D> -> update dto
+ * @param <E> -> entity
+ * @param <K> -> key
+ * @param <B> -> boolean
+ */
 public abstract class BaseRepository<
         CR extends GenericBaseDto,
         D extends GenericDto,
@@ -28,7 +36,7 @@ public abstract class BaseRepository<
 
     public abstract E get(K id);
 
-    public abstract List<E> list(K id);
+    public abstract List<E> list();
 
 
     protected Connection connection = UNIContainer.getBean(Connection.class);

@@ -42,7 +42,7 @@ public class ColumnRepository extends BaseRepository<ColumnCreateDto, ColumnUpda
     }
 
     @Override
-    public List<Column> list(Long id) {
+    public List<Column> list() {
         return null;
     }
 }

@@ -6,8 +6,6 @@ import uz.elmurodov.dtos.GenericDto;
 
 @Data
 public class TaskUpdateDto extends GenericDto {
-	private int id;
-
 	private int level;
 
 	@SerializedName("project_column_id")
@@ -16,7 +14,7 @@ public class TaskUpdateDto extends GenericDto {
 	private String name;
 
 	private String description;
-	
+
 	private String deadline;
 
 	private int priority;

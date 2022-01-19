@@ -11,7 +11,11 @@ import uz.elmurodov.utils.BaseUtils;
 import java.sql.Types;
 import java.util.List;
 
-public class AuthUserRepository extends BaseRepository<AuthUserCreateDto, AuthUserUpdateDto, AuthUser, Long, Boolean> {
+public class AuthUserRepository extends BaseRepository<AuthUserCreateDto,
+        AuthUserUpdateDto,
+        AuthUser,
+        Long,
+        Boolean> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 
     public AuthUser login(String userName, String password) {
@@ -51,7 +55,7 @@ public class AuthUserRepository extends BaseRepository<AuthUserCreateDto, AuthUs
     }
 
     @Override
-    public List<AuthUser> list(Long id) {
+    public List<AuthUser> list() {
         return null;
     }
 }

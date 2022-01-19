@@ -42,7 +42,7 @@ public class ProjectRepository extends BaseRepository<ProjectCreateDto, ProjectU
     }
 
     @Override
-    public List<Project> list(Long id) {
+    public List<Project> list() {
         return null;
     }
 }

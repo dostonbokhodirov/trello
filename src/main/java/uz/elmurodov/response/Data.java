@@ -1,6 +1,7 @@
 package uz.elmurodov.response;
 
 import lombok.Getter;
+import uz.elmurodov.dtos.GenericDto;
 
 /**
  * @param <B> Body

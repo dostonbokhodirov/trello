@@ -42,7 +42,7 @@ public class ProjectService extends BaseService<ProjectRepository, ProjectCreate
     }
 
     @Override
-    public ResponseEntity<Data<?>> list(Long id) {
+    public ResponseEntity<Data<?>> list() {
         return null;
     }
 }

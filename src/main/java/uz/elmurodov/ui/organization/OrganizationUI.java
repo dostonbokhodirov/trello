@@ -48,7 +48,7 @@ public class OrganizationUI extends BaseUI {
     @Override
     public void list() {
         OrganizationService organizationService = UNIContainer.getBean(OrganizationService.class);
-        ResponseEntity<Data<?>> response = organizationService.list((long) SecurityHolder.authUserSession.getId());
+        ResponseEntity<Data<?>> response = organizationService.list();
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(response.getBody());
         } else {

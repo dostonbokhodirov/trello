@@ -13,7 +13,7 @@ public class AuthUserUpdateDto extends GenericDto {
 
 	private String language;
 
-	private int id;
+	private Long id;
 
 	@SerializedName("first_name")
 	private String firstName;

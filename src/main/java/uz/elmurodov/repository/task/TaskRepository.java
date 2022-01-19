@@ -42,7 +42,7 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
     }
 
     @Override
-    public List<Task> list(Long id) {
+    public List<Task> list() {
         return null;
     }
 }

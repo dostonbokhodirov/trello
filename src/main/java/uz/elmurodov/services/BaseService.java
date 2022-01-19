@@ -37,6 +37,6 @@ public abstract class BaseService<R extends BaseRepository,
 
     public abstract ResponseEntity<Data<?>> delete(K id);
 
-    public abstract ResponseEntity<Data<?>> list(K id);
+    public abstract ResponseEntity<Data<?>> list();
 
 }

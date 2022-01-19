@@ -6,7 +6,6 @@ import uz.elmurodov.security.organization.Point;
 
 @Data
 public class OrganizationUpdateDto extends GenericDto {
-	private int id;
 	private String website;
 	private String name;
 	private String logo;
