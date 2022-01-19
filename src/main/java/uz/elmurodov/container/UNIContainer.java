@@ -27,6 +27,7 @@ public class UNIContainer {
     private static final ApplicationProperties APPLICATION_PROPERTIES;
     private static final DatabaseProperties DATABASE_PROPERTIES;
     private static Connection CONNECTION;
+
     private static final OrganizationRepository ORGANIZATION_REPOSITORY;
     private static final ProjectRepository PROJECT_REPOSITORY;
     private static final ColumnRepository COLUMN_REPOSITORY;
