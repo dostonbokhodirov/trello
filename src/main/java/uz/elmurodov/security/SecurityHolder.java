@@ -3,7 +3,10 @@ package uz.elmurodov.security;
 import lombok.Setter;
 import uz.elmurodov.security.auth.AuthUser;
 import uz.elmurodov.security.auth.PermissionsItem;
+import uz.elmurodov.security.column.Column;
 import uz.elmurodov.security.organization.Organization;
+import uz.elmurodov.security.project.Project;
+import uz.elmurodov.security.task.Task;
 
 import java.util.List;
 import java.util.Objects;
@@ -12,6 +15,9 @@ import java.util.Objects;
 public class SecurityHolder {
     public static AuthUser authUserSession;
     public static Organization organizationSession;
+    public static Project projectSession;
+    public static Task taskSession;
+    public static Column columnSession;
     public static List<PermissionsItem> permissions;
 
     public static boolean hasPermission(String permission) {

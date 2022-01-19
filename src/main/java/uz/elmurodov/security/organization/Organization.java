@@ -20,7 +20,7 @@ public class Organization implements Auditable {
 
 	private String location;
 
-	private int id;
+	private Long id;
 
 	@SerializedName("paid_for")
 	private String paidFor;

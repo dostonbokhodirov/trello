@@ -1,27 +1,13 @@
 package uz.elmurodov.security.auth;
 
-import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
-public class RolesItem{
+@Data
+public class RolesItem {
+    private String code;
 
-	@SerializedName("code")
-	private String code;
+    private String name;
 
-	@SerializedName("name")
-	private String name;
+    private Long id;
 
-	@SerializedName("id")
-	private int id;
-
-	public String getCode(){
-		return code;
-	}
-
-	public String getName(){
-		return name;
-	}
-
-	public int getId(){
-		return id;
-	}
 }

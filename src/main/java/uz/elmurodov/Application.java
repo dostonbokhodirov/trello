@@ -22,7 +22,6 @@ public class Application {
         String choice = Input.getStr("Your choice: ");
         switch (choice.toUpperCase()) {
             case "LOGIN" -> {
-//                AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
                 authUserUI.login();
             }
             case "CREATE_ORGANIZATION" -> {
@@ -77,7 +76,6 @@ public class Application {
             }
 
             case "LOGOUT" -> {
-//                AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
                 authUserUI.logout();
             }
 
