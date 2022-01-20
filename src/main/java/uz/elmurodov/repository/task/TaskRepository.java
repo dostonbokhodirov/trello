@@ -23,7 +23,9 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
 
     @Override
     public Long create(TaskCreateDto dto) {
-        return null;
+        String json = BaseUtils.gson.toJson(dto);
+        prepareArguments(json, SecurityHolder.authUserSession.getId());
+        return (long) callProcedure(property.get("task.create"), Types.BIGINT);
     }
 
     @Override
@@ -38,12 +40,15 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
 
     @Override
     public Boolean update(TaskUpdateDto dto) {
-        return null;
+        String json = BaseUtils.gson.toJson(dto);
+        prepareArguments(json, SecurityHolder.authUserSession.getId());
+        return (Boolean) callProcedure("task.update", Types.BOOLEAN);
     }
 
     @Override
     public Boolean delete(TaskUpdateDto dto) {
-        return null;
+        prepareArguments(SecurityHolder.authUserSession.getId(), dto.getId());
+        return (Boolean) callProcedure(property.get("task.delete"), Types.BOOLEAN);
     }
 
     @Override

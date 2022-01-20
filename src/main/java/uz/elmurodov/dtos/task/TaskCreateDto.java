@@ -7,7 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import uz.elmurodov.dtos.GenericBaseDto;
 @AllArgsConstructor
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@NoArgsConstructor
 @Data
 public class TaskCreateDto implements GenericBaseDto {
     private int level;

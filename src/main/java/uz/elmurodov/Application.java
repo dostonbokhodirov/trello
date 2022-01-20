@@ -86,6 +86,9 @@ public class Application {
                 columnUI.list();
             }
 
+            case "HHH" ->{
+                taskUI.create();
+            }
 
             default -> {
                 Print.println(Color.RED, "Wrong choice");
