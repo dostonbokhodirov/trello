@@ -23,14 +23,14 @@ public class ProjectUI extends BaseUI<ProjectService> {
         String name = Input.getStr("Name : ");
         String tz = Input.getStr("Tz : ");
         String description = Input.getStr("Desctiption : ");
-        ProjectService projectServise = UNIContainer.getBean(ProjectService.class);
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
         ProjectCreateDto dto = new ProjectCreateDto();
         dto.setName(name);
         dto.setDescription(description);
         dto.setTz(tz);
         dto.setBackground("grey");
         dto.setOrganizationId(SecurityHolder.authUserSession.getOrganization().getId());
-        ResponseEntity<Data<?>> response = projectServise.create(dto);
+        ResponseEntity<Data<?>> response = projectService.create(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -40,10 +40,10 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void block() {
-        ProjectService projectServise = UNIContainer.getBean(ProjectService.class);
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
         ProjectUpdateDto dto = new ProjectUpdateDto();
         dto.setId(SecurityHolder.projectSession.getId());
-        ResponseEntity<Data<?>> response = projectServise.block(dto);
+        ResponseEntity<Data<?>> response = projectService.block(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -53,10 +53,10 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void unblock() {
-        ProjectService projectServise = UNIContainer.getBean(ProjectService.class);
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
         ProjectUpdateDto dto = new ProjectUpdateDto();
         dto.setId(SecurityHolder.projectSession.getId());
-        ResponseEntity<Data<?>> response = projectServise.block(dto);
+        ResponseEntity<Data<?>> response = projectService.block(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -66,8 +66,8 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void delete() {
-        ProjectService projectServise = UNIContainer.getBean(ProjectService.class);
-        ResponseEntity<Data<?>> response = projectServise.delete(SecurityHolder.projectSession.getId());
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
+        ResponseEntity<Data<?>> response = projectService.delete(SecurityHolder.projectSession.getId());
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -77,7 +77,7 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void update() {
-        ProjectService projectServise = UNIContainer.getBean(ProjectService.class);
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
         ProjectUpdateDto dto = new ProjectUpdateDto();
         String name = Input.getStr("Name : ");
         String tz = Input.getStr("Tz : ");
@@ -89,7 +89,7 @@ public class ProjectUI extends BaseUI<ProjectService> {
         dto.setBackground(background);
         dto.setOrganizationId(organizationId);
         dto.setTz(tz);
-        ResponseEntity<Data<?>> response = projectServise.update(dto);
+        ResponseEntity<Data<?>> response = projectService.update(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -99,8 +99,8 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void get() {
-        ProjectService projectServise = UNIContainer.getBean(ProjectService.class);
-        ResponseEntity<Data<?>> response = projectServise.get(SecurityHolder.projectSession.getId());
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
+        ResponseEntity<Data<?>> response = projectService.get(SecurityHolder.projectSession.getId());
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -110,15 +110,26 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void list() {
-        ProjectService projectServise = UNIContainer.getBean(ProjectService.class);
-        ResponseEntity<Data<?>> response = projectServise.list();
-        List<Project> list = (List<Project>) response;
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
+        ResponseEntity<Data<?>> response = projectService.list();
+        List<Project> list = (List<Project>) response.getBody().getData();
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
+            int i = 1;
             for (Project project : list) {
-                Print.println(Color.GREEN, project.getName());
+                Print.println(Color.GREEN, i++ + ". " + project.getName());
             }
+        }
+    }
+
+    public void get(Long projectId) {
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
+        ResponseEntity<Data<?>> response = projectService.get(projectId);
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else {
+            Print.println(Color.GREEN, "Successfully blocked project");
         }
     }
 }

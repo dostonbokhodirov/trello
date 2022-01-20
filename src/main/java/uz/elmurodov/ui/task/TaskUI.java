@@ -69,7 +69,8 @@ public class TaskUI extends BaseUI<TaskService> {
         int priority = Input.getNum("Enter priority: ");
         int level = Input.getNum("Enter level\n(3=HARD/2=MEDIUM/1=EASY)\n: ");
         int order = Input.getNum("Enter order: ");
-        TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order);
+        String message = Input.getStr("Enter messsage: ");
+        TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order, message);
         ResponseEntity<Data<?>> response = taskService.update(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -106,11 +107,25 @@ public class TaskUI extends BaseUI<TaskService> {
 //        }
     }
 
+    public void get(Long taskId) {
+        ResponseEntity<Data<?>> response = service.get(taskId);
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else Print.println(Color.BLUE, response.getBody().getData());
+    }
+
     public void addMember() {
 
     }
 
+    public void addComment() {
+        String yourComment = Input.getStr("Add a comment : ");
+        TaskUpdateDto dto = new TaskUpdateDto();
+        dto.setMessage(yourComment);
+        ResponseEntity<Data<?>> response=taskService.addComment(dto);
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else Print.println(Color.BLUE, "Your comment Successfully added");
 
-    public void addCommet() {
-         }
+    }
 }

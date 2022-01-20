@@ -82,4 +82,13 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }
+
+    public ResponseEntity<Data<?>> addComment(TaskUpdateDto dto){
+        try {
+            taskRepository.addTask(dto);
+            return new ResponseEntity<>(new Data<>(true));
+        }catch (CustomerSQLException e){
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
+    }
 }
