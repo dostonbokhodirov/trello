@@ -7,13 +7,9 @@ import uz.elmurodov.dtos.GenericBaseDto;
 @Data
 public class ProjectCreateDto implements GenericBaseDto {
 	private String tz;
-
 	private String background;
-
 	@SerializedName("organization_id")
-	private int organizationId;
-
+	private long organizationId;
 	private String name;
-
 	private String description;
 }

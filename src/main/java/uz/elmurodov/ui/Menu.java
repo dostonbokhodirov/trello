@@ -2,8 +2,11 @@ package uz.elmurodov.ui;
 
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.security.auth.RolesItem;
+import uz.elmurodov.services.project.ProjectService;
+import uz.elmurodov.services.task.TaskService;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.column.ColumnUI;
+import uz.elmurodov.ui.project.ProjectUI;
 import uz.elmurodov.ui.task.TaskUI;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
@@ -11,11 +14,13 @@ import uz.jl.utils.Print;
 
 import java.util.Objects;
 
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static uz.elmurodov.security.SecurityHolder.authUserSession;
 
 public class Menu {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
     private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
+    private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
     private static final ColumnUI columnUI = UNIContainer.getBean(ColumnUI.class);
 
     public static void getMainMenu() {
@@ -74,6 +79,24 @@ public class Menu {
     }
 
     public static void enterProjectMenu() {
+        projectUI.list();
+        Print.println(Color.GREEN, "Back  -> BACK");
+        String choice = Input.getStr("Choice Project: ");
+        if (isNumeric(choice)) {
+            projectDetailsMenu(Long.parseLong(choice));
+        } else {
+            if ("BACK".equalsIgnoreCase(choice)) {
+                return;
+            } else {
+                Print.println(Color.RED, "Wrong choice");
+            }
+        }
+        enterTaskMenu();
+    }
+
+    private static void projectDetailsMenu(long order) {
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
+        projectService.get(order - 1);
         Print.println(Color.GREEN, "Create Task  -> TASK_CREATE");
         Print.println(Color.GREEN, "Enter Task  -> TASK_ENTER");
         Print.println(Color.GREEN, "Create Column  -> COLUMN_CREATE");
@@ -120,36 +143,45 @@ public class Menu {
             }
             default -> Print.println(Color.RED, "Wrong choice");
         }
-        enterProjectMenu();
+        projectDetailsMenu(order);
     }
 
     private static void enterTaskMenu() {
-        taskUI.get();
+        taskUI.list();
+        Print.println(Color.GREEN, "Back  -> BACK");
+        String choice = Input.getStr("Choice Task: ");
+        if (isNumeric(choice)) {
+            taskDetailsMenu(Long.parseLong(choice));
+        } else {
+            if ("BACK".equalsIgnoreCase(choice)) {
+                return;
+            } else {
+                Print.println(Color.RED, "Wrong choice");
+            }
+        }
+        enterTaskMenu();
+    }
+
+    private static void taskDetailsMenu(Long order) {
+        TaskService taskService = UNIContainer.getBean(TaskService.class);
+        taskService.get(order - 1);
         Print.println(Color.GREEN, "Update Task -> TASK_CREATE");
         Print.println(Color.GREEN, "Delete Task -> TASK_DELETE");
         if (authUserUI.isLeader()) {
             Print.println(Color.GREEN, "Create Member -> MEMBER_CREATE");
         }
         Print.println(Color.GREEN, "Create Comment -> COMMENT_CREATE");
+        Print.println(Color.GREEN, "Back  -> BACK");
         String choice = Input.getStr("Enter your choice: ");
-        switch (choice.toUpperCase()) {
-            case "TASK_CREATE" -> {
-                taskUI.create();
-            }
-            case "TASK_DELETE" -> {
-                taskUI.delete();
-            }
-            case "MEMBER_CREATE" -> {
-                taskUI.addMember();
-            }
-            case "COMMENT_CREATE" -> {
-                taskUI.addCommet();
-            }
-            case "BACK" -> {
-                return;
-            }
-            default -> Print.println(Color.RED, "Wrong choice");
+        if ("TASK_CREATE".equalsIgnoreCase(choice)) {
+        } else if ("TASK_DELETE".equalsIgnoreCase(choice)) {
+        } else if ("MEMBER_CREATE".equalsIgnoreCase(choice)) {
+        } else if ("COMMENT_CREATE".equalsIgnoreCase(choice)) {
+        } else if ("BACK".equalsIgnoreCase(choice)) {
+            return;
+        } else {
+            Print.println(Color.RED, "Wrong choice");
         }
-        enterTaskMenu();
+        taskDetailsMenu(order);
     }
 }

@@ -1,6 +1,8 @@
 package uz.elmurodov.ui.task;
 
 import uz.elmurodov.container.UNIContainer;
+import com.google.gson.annotations.SerializedName;
+import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.enums.HttpStatus;
@@ -80,20 +82,30 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void get() {
-        ResponseEntity<Data<?>> response = service.get(SecurityHolder.authUserSession.getId());
+        ResponseEntity<Data<?>> response = service.get(SecurityHolder.taskSession.getId());
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
-
         } else Print.println(Color.BLUE, response.getBody().getData());
     }
 
     @Override
     public void list() {
-        ResponseEntity<Data<?>> response =  taskService.list();
-        List<Task> taskList = (List<Task>) response.getBody().getData();
-        for (int i = 0; i < taskList.size(); i++) {
-            Print.println(Color.BLUE, (i+1) + ". " + taskList.get(i).getName());
+        ResponseEntity<Data<?>> response = service.list();
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else {
+            List<Task> tasks = (List<Task>) response.getBody().getData();
+            int i = 1;
+            for (Task task : tasks) {
+                Print.println(Color.BLUE, i++ + ". " + task.getName());
+            }
         }
+//        Print.println(taskService.list());
+//        ResponseEntity<Data<?>> response =  taskService.list();
+//        List<Task> taskList = (List<Task>) response.getBody().getData();
+//        for (int i = 0; i < taskList.size(); i++) {
+//            Print.println(Color.BLUE, (i+1) + ". " + taskList.get(i).getName());
+//        }
     }
 
     public void addMember() {

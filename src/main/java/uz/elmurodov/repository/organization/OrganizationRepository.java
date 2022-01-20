@@ -6,8 +6,8 @@ import uz.elmurodov.dtos.organization.OrganizationCreateDto;
 import uz.elmurodov.dtos.organization.OrganizationUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
-import uz.elmurodov.security.organization.Organization;
 import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.organization.Organization;
 import uz.elmurodov.utils.BaseUtils;
 
 import java.lang.reflect.Type;
@@ -52,10 +52,9 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
 
     @Override
     public List<Organization> list() {
-        Type type = new TypeToken<List<Organization>>() {
-        }.getType();
         prepareArguments(SecurityHolder.authUserSession.getId());
         String JsonData = (String) callProcedure(property.get("organization.list"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(JsonData, type);
+        return BaseUtils.gson.fromJson(JsonData, new TypeToken<List<Organization>>() {
+        }.getType());
     }
 }

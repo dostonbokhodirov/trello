@@ -16,4 +16,5 @@ public abstract class BaseUI<S extends BaseService> {
     public abstract void list();
 
     protected S service;
+
 }
