@@ -31,7 +31,7 @@ public class Column implements Auditable {
     @SerializedName("created_at")
     private String createdAt;
 
-    private Integer id;
+    private Long id;
 
     @SerializedName("created_by")
     private Integer createdBy;

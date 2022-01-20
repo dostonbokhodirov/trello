@@ -51,7 +51,7 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
     }
 
     @Override
-    public List<Organization> list(Long id) {
+    public List<Organization> list() {
         Type type = new TypeToken<List<Organization>>() {
         }.getType();
         prepareArguments(SecurityHolder.authUserSession.getId());

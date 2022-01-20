@@ -52,10 +52,10 @@ public class OrganizationService extends BaseService<OrganizationRepository,
     }
 
     @Override
-    public ResponseEntity<Data<?>> list(Long id) {
+    public ResponseEntity<Data<?>> list() {
         try {
             OrganizationRepository organizationRepository = UNIContainer.getBean(OrganizationRepository.class);
-            List<Organization> organizations = organizationRepository.list(SecurityHolder.authUserSession.getId());
+            List<Organization> organizations = organizationRepository.list();
             return new ResponseEntity<>(new Data<>(organizations, (long) organizations.size()));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());

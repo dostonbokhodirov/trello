@@ -11,7 +11,7 @@ import java.time.LocalDate;
  */
 @Data
 public class Project implements Auditable {
-    private Integer id;
+    private Long id;
 
     private String code;
 

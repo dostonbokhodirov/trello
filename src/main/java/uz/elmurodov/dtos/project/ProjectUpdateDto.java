@@ -6,8 +6,6 @@ import uz.elmurodov.dtos.GenericDto;
 
 @Data
 public class ProjectUpdateDto extends GenericDto {
-	private int id;
-
 	private String tz;
 
 	private String background;

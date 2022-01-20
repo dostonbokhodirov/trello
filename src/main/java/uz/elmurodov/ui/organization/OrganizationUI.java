@@ -4,7 +4,6 @@ import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.services.organization.OrganizationService;
 import uz.elmurodov.ui.BaseUI;
 import uz.elmurodov.utils.BaseUtils;
@@ -13,7 +12,7 @@ import uz.jl.utils.Print;
 /**
  * @author Doston Bokhodirov, Wed 10:01 AM. 1/19/2022
  */
-public class OrganizationUI extends BaseUI {
+public class OrganizationUI extends BaseUI<OrganizationService> {
 
     @Override
     public void create() {
@@ -47,8 +46,7 @@ public class OrganizationUI extends BaseUI {
 
     @Override
     public void list() {
-        OrganizationService organizationService = UNIContainer.getBean(OrganizationService.class);
-        ResponseEntity<Data<?>> response = organizationService.list((long) SecurityHolder.authUserSession.getId());
+        ResponseEntity<Data<?>> response = service.list();
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(response.getBody());
         } else {

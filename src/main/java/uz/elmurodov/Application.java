@@ -6,6 +6,8 @@ import uz.elmurodov.security.task.Task;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.Menu;
 import uz.elmurodov.ui.organization.OrganizationUI;
+import uz.elmurodov.ui.project.ProjectUI;
+import uz.elmurodov.ui.task.TaskUI;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
@@ -13,71 +15,63 @@ import uz.jl.utils.Print;
 public class Application {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
     private static final OrganizationUI organizationUI = UNIContainer.getBean(OrganizationUI.class);
+    private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
+    private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
+
     public static void main(String[] args) {
         run();
     }
 
     private static void run() {
         Menu.getMainMenu();
-        String choice = Input.getStr("Your choice: ");
+        String choice = Input.getStr("Enter your choice: ");
         switch (choice.toUpperCase()) {
             case "LOGIN" -> {
-//                AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
                 authUserUI.login();
             }
-            case "CREATE_ORGANIZATION" -> {
+            case "TASKS" -> {
 
             }
-            case "BlOCK_ORGANIZATION" -> {
+            case "PROJECTS" -> {
+                Menu.getProjectMenu();
+            }
+            case "EMPLOYEE_ADD" -> {
 
             }
-            case "UNBLOCK_ORGANIZATION" -> {
+            case "EMPLOYEE_BLOCK" -> {
 
             }
-            case "UPDATE_ORGANIZATION" -> {
+            case "EMPLOYEE_UNBLOCK" -> {
 
             }
-            case "DELETE_ORGANIZATION" -> {
+            case "EMPLOYEE_DELETE" -> {
 
             }
-            case "GET_ORGANIZATION" -> {
+            case "EMPLOYEE_GET" -> {
 
             }
-            case "ORGANIZATIONS_LIST" -> {
+            case "EMPLOYEE_LIST" -> {
 
             }
-            case "CREATE_PROJECT" -> {
+            case "ORGANIZATION_ADD" -> {
 
             }
-            case "BlOCK_PROJECT" -> {
+            case "ORGANIZATION_BLOCK" -> {
 
             }
-            case "UNBLOCK_PROJECT" -> {
+            case "ORGANIZATION_UNBLOCK" -> {
 
             }
-            case "UPDATE_PROJECT" -> {
+            case "ORGANIZATION_DELETE" -> {
 
             }
-            case "DELETE_PROJECT" -> {
+            case "ORGANIZATION_GET" -> {
 
             }
-            case "GET_PROJECT" -> {
-
-            }
-            case "PROJECTS_LIST" -> {
-
-            }
-
             case "ORGANIZATION_LIST" -> {
-                organizationUI.list();
-            }
 
-            case "AUTH_USER_INFO" -> {
-                authUserUI.get();
             }
-
             case "LOGOUT" -> {
-//                AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
                 authUserUI.logout();
             }
 
