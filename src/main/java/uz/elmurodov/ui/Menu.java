@@ -3,6 +3,7 @@ package uz.elmurodov.ui;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.security.auth.RolesItem;
 import uz.elmurodov.ui.auth.AuthUserUI;
+import uz.elmurodov.ui.column.ColumnUI;
 import uz.elmurodov.ui.task.TaskUI;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
@@ -15,6 +16,7 @@ import static uz.elmurodov.security.SecurityHolder.authUserSession;
 public class Menu {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
     private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
+    private static final ColumnUI columnUI = UNIContainer.getBean(ColumnUI.class);
 
     public static void getMainMenu() {
         if (Objects.isNull(authUserSession)) {
@@ -87,31 +89,31 @@ public class Menu {
         String choice = Input.getStr("Enter your choice: ");
         switch (choice.toUpperCase()) {
             case "TASK_CREATE" -> {
-
+                taskUI.create();
             }
             case "TASK_ENTER" -> {
                 enterTaskMenu();
             }
             case "COLUMN_CREATE" -> {
-
+                columnUI.create();
             }
             case "COLUMN_UPDATE" -> {
-
+                columnUI.update();
             }
             case "COLUMN_DELETE" -> {
-
+                columnUI.delete();
             }
             case "COLUMN_LIST" -> {
-
+                columnUI.list();
             }
             case "MEMBER_UPDATE" -> {
-
+                columnUI.updateMember();
             }
             case "MEMBER_DELETE" -> {
-
+                columnUI.memberDelete();
             }
             case "MEMBER_LIST" -> {
-
+                columnUI.memberList();
             }
             case "BACK" -> {
                 return;
@@ -132,16 +134,16 @@ public class Menu {
         String choice = Input.getStr("Enter your choice: ");
         switch (choice.toUpperCase()) {
             case "TASK_CREATE" -> {
-
+                taskUI.create();
             }
             case "TASK_DELETE" -> {
-
+                taskUI.delete();
             }
             case "MEMBER_CREATE" -> {
-
+                taskUI.addMember();
             }
             case "COMMENT_CREATE" -> {
-
+                taskUI.addCommet();
             }
             case "BACK" -> {
                 return;

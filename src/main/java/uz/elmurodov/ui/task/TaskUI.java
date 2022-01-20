@@ -1,5 +1,8 @@
 package uz.elmurodov.ui.task;
 
+import com.google.gson.annotations.SerializedName;
+import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
@@ -8,15 +11,25 @@ import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.task.TaskService;
 import uz.elmurodov.ui.BaseUI;
 import uz.jl.utils.Color;
+import uz.jl.utils.Input;
 import uz.jl.utils.Print;
 
 /**
  * @author Doston Bokhodirov, Thu 12:05 AM. 1/20/2022
  */
 public class TaskUI extends BaseUI<TaskService> {
+    private static final TaskService taskService = UNIContainer.getBean(TaskService.class);
+
     @Override
     public void create() {
-
+        String column = Input.getStr("Column: ");
+        String name = Input.getStr("Enter name: ");
+        String description = Input.getStr("Enter description: ");
+        String deadline = Input.getStr("Enter deadline\n(2012-12-12 12:12:12)\n: ");
+        String priority = Input.getStr("Enter priority: ");
+        String level = Input.getStr("Enter level\n(HARD/MEDIUM/EASY)\n: ");
+//        TaskCreateDto dto = new TaskCreateDto(level, column, name, description, deadline, priority);
+//        taskService.create(dto);
     }
 
     @Override
@@ -49,6 +62,12 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void list() {
+        Print.println(taskService.list());
+    }
 
+    public void addMember() {
+    }
+
+    public void addCommet() {
     }
 }

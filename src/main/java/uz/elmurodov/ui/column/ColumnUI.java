@@ -41,4 +41,13 @@ public class ColumnUI extends BaseUI<ColumnService> {
     public void list() {
 
     }
+
+    public void memberList() {
+    }
+
+    public void memberDelete() {
+    }
+
+    public void updateMember() {
+    }
 }

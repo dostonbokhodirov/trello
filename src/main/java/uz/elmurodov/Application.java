@@ -30,7 +30,7 @@ public class Application {
                 authUserUI.login();
             }
             case "TASKS" -> {
-
+                taskUI.list();
             }
             case "PROJECTS" -> {
                 Menu.getProjectMenu();
