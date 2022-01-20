@@ -2,18 +2,31 @@ package uz.elmurodov.services.project;
 
 import uz.elmurodov.dtos.project.ProjectCreateDto;
 import uz.elmurodov.dtos.project.ProjectUpdateDto;
+import uz.elmurodov.exception.CustomerSQLException;
 import uz.elmurodov.repository.project.ProjectRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
+import uz.elmurodov.security.project.Project;
 import uz.elmurodov.services.BaseService;
+
+import java.util.List;
 
 /**
  * @author Doston Bokhodirov, Wed 8:45 PM. 1/19/2022
  */
 public class ProjectService extends BaseService<ProjectRepository, ProjectCreateDto, ProjectUpdateDto, Long> {
+    public ProjectService(ProjectRepository repository) {
+        super(repository);
+    }
+
     @Override
     public ResponseEntity<Data<?>> create(ProjectCreateDto dto) {
-        return null;
+        try {
+            repository.create(dto);
+            return new ResponseEntity<>(new Data<>(true));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override
@@ -23,26 +36,53 @@ public class ProjectService extends BaseService<ProjectRepository, ProjectCreate
 
     @Override
     public ResponseEntity<Data<?>> block(ProjectUpdateDto dto) {
-        return null;
+        try{
+            repository.block(dto);
+            return new ResponseEntity<>(new Data<>(true));
+        }catch (CustomerSQLException e){
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        }
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(ProjectUpdateDto dto) {
-        return null;
+    public ResponseEntity<Data<?>> unblock(ProjectUpdateDto dto){
+        try{
+            repository.block(dto);
+            return new ResponseEntity<>(new Data<>(true));
+        }catch (CustomerSQLException e){
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        }
     }
 
     @Override
     public ResponseEntity<Data<?>> update(ProjectUpdateDto dto) {
-        return null;
+        try{
+            repository.block(dto);
+            return new ResponseEntity<>(new Data<>(true));
+        }catch (CustomerSQLException e){
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        }
     }
 
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
-        return null;
+        try{
+            ProjectUpdateDto dto=new ProjectUpdateDto();
+            dto.setId(id);
+            repository.delete(dto);
+            return new ResponseEntity<>(new Data<>(true));
+        }catch (CustomerSQLException e){
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        }
     }
 
     @Override
     public ResponseEntity<Data<?>> list() {
-        return null;
+        try{
+             List<Project> list= repository.list();
+             return new ResponseEntity<>(new Data<>(list));
+        }catch (CustomerSQLException e){
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        }
     }
 }
