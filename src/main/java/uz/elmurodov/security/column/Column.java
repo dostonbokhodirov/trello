@@ -5,6 +5,7 @@ import lombok.Data;
 import uz.elmurodov.security.Auditable;
 
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * @author Doston Bokhodirov, Wed 8:36 PM. 1/19/2022
@@ -18,7 +19,7 @@ public class Column implements Auditable {
     private String emoji;
 
     @SerializedName("updated_at")
-    private LocalDate updatedAt;
+    private String updatedAt;
 
     @SerializedName("project_id")
     private Integer projectId;
@@ -38,4 +39,7 @@ public class Column implements Auditable {
 
     @SerializedName("order")
     private Integer order;
+
+    @SerializedName("tasks")
+    private List<TasksItem> tasks;
 }

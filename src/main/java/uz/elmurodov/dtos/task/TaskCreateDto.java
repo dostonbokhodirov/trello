@@ -1,14 +1,18 @@
 package uz.elmurodov.dtos.task;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import uz.elmurodov.dtos.GenericBaseDto;
-
+@AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class TaskCreateDto implements GenericBaseDto {
     private int level;
 
-	@SerializedName("project_column_id")
+    @SerializedName("project_column_id")
     private int projectColumnId;
 
     private String name;
@@ -19,5 +23,4 @@ public class TaskCreateDto implements GenericBaseDto {
 
     private int priority;
 
-    private int order;
 }

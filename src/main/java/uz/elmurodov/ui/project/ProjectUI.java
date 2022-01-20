@@ -1,5 +1,6 @@
 package uz.elmurodov.ui.project;
 
+import uz.elmurodov.services.project.ProjectService;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.project.ProjectCreateDto;
 import uz.elmurodov.dtos.project.ProjectUpdateDto;
@@ -19,7 +20,7 @@ import java.util.List;
 /**
  * @author Doston Bokhodirov, Thu 12:04 AM. 1/20/2022
  */
-public class ProjectUI extends BaseUI {
+public class ProjectUI extends BaseUI<ProjectService> {
     @Override
     public void create() {
         String name = Input.getStr("Name : ");

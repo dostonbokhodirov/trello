@@ -5,6 +5,7 @@ import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.Menu;
+import uz.elmurodov.ui.column.ColumnUI;
 import uz.elmurodov.ui.organization.OrganizationUI;
 import uz.elmurodov.ui.project.ProjectUI;
 import uz.elmurodov.ui.task.TaskUI;
@@ -16,75 +17,62 @@ public class Application {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
     private static final OrganizationUI organizationUI = UNIContainer.getBean(OrganizationUI.class);
     private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
+    private static final ColumnUI columnUI = UNIContainer.getBean(ColumnUI.class);
     private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
+
     public static void main(String[] args) {
         run();
     }
 
     private static void run() {
         Menu.getMainMenu();
-        String choice = Input.getStr("Your choice: ");
+        String choice = Input.getStr("Enter your choice: ");
         switch (choice.toUpperCase()) {
             case "LOGIN" -> {
                 authUserUI.login();
             }
             case "TASKS" -> {
-
+                taskUI.list();
             }
             case "PROJECTS" -> {
-                projectUI.list();
+                Menu.getProjectMenu();
             }
-            case "CREATE_ORGANIZATION" -> {
+            case "EMPLOYEE_ADD" -> {
 
             }
-            case "BlOCK_ORGANIZATION" -> {
+            case "EMPLOYEE_BLOCK" -> {
 
             }
-            case "UNBLOCK_ORGANIZATION" -> {
+            case "EMPLOYEE_UNBLOCK" -> {
 
             }
-            case "UPDATE_ORGANIZATION" -> {
+            case "EMPLOYEE_DELETE" -> {
 
             }
-            case "DELETE_ORGANIZATION" -> {
+            case "EMPLOYEE_GET" -> {
 
             }
-            case "GET_ORGANIZATION" -> {
+            case "EMPLOYEE_LIST" -> {
 
             }
-            case "ORGANIZATIONS_LIST" -> {
+            case "ORGANIZATION_ADD" -> {
 
             }
-            case "CREATE_PROJECT" -> {
-                projectUI.create();
-            }
-            case "BlOCK_PROJECT" -> {
-                projectUI.block();
-            }
-            case "UNBLOCK_PROJECT" -> {
-                projectUI.unblock();
-            }
-            case "UPDATE_PROJECT" -> {
-                projectUI.update();
-            }
-            case "DELETE_PROJECT" -> {
+            case "ORGANIZATION_BLOCK" -> {
 
             }
-            case "GET_PROJECT" -> {
+            case "ORGANIZATION_UNBLOCK" -> {
 
             }
-            case "PROJECTS_LIST" -> {
+            case "ORGANIZATION_DELETE" -> {
 
             }
+            case "ORGANIZATION_GET" -> {
 
+            }
             case "ORGANIZATION_LIST" -> {
-                organizationUI.list();
-            }
 
-            case "AUTH_USER_INFO" -> {
-                authUserUI.get();
             }
-
             case "LOGOUT" -> {
                 authUserUI.logout();
             }
@@ -93,6 +81,15 @@ public class Application {
                 Print.println(Color.GREEN, "Bye");
                 return;
             }
+
+            case "JWA_COLUMN_LIST" -> {
+                columnUI.list();
+            }
+
+            case "HHH" ->{
+                taskUI.create();
+            }
+
             default -> {
                 Print.println(Color.RED, "Wrong choice");
             }
