@@ -21,8 +21,6 @@ import java.util.List;
  * @author Doston Bokhodirov, Thu 12:05 AM. 1/20/2022
  */
 public class TaskUI extends BaseUI<TaskService> {
-    TaskService taskUI = UNIContainer.getBean(TaskService.class);
-
     private static final TaskService taskService = UNIContainer.getBean(TaskService.class);
 
     @Override
