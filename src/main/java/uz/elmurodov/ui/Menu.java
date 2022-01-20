@@ -16,9 +16,13 @@ public class Menu {
         if (Objects.isNull(SecurityHolder.authUserSession)) {
             Print.println(Color.BLUE, "Login -> LOGIN");
         } else {
-//            for (PermissionsItem permission : permissions) {
-//                Print.println(Color.BLUE, permission.getName() + " -> " + permission.getCode());
-//            }
+            try{
+                for (PermissionsItem permission : permissions) {
+                    Print.println(Color.BLUE, permission.getName() + " -> " + permission.getCode());
+                }
+            }catch (NullPointerException e){
+                Print.println(Color.RED,"Permission not found");
+            }
             Print.println("Logout -> LOGOUT");
         }
         Print.println(Color.BLUE, "Exit -> EXIT");

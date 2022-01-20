@@ -56,16 +56,16 @@ public class Application {
 
             }
             case "CREATE_PROJECT" -> {
-
+                projectUI.create();
             }
             case "BlOCK_PROJECT" -> {
-
+                projectUI.block();
             }
             case "UNBLOCK_PROJECT" -> {
-
+                projectUI.unblock();
             }
             case "UPDATE_PROJECT" -> {
-
+                projectUI.update();
             }
             case "DELETE_PROJECT" -> {
 

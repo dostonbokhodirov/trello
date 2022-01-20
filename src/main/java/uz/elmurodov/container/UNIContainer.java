@@ -65,7 +65,7 @@ public class UNIContainer {
         AUTH_USER_REPOSITORY = new AuthUserRepository();
 
         ORGANIZATION_SERVICE = new OrganizationService();
-        PROJECT_SERVICE = new ProjectService();
+        PROJECT_SERVICE = new ProjectService(PROJECT_REPOSITORY);
         COLUMN_SERVICE = new ColumnService();
         TASK_SERVICE = new TaskService();
         AUTH_USER_SERVICE = new AuthUserService(AUTH_USER_REPOSITORY);
