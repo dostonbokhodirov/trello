@@ -21,10 +21,6 @@ public class ColumnUI extends BaseUI<ColumnService> {
         super(service);
     }
 
-    public ColumnUI(ColumnService service) {
-        super(service);
-    }
-
     @Override
     public void create() {
         String columnName = Input.getStr("Name of column");

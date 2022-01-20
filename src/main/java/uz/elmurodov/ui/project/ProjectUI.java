@@ -10,6 +10,7 @@ import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.project.Project;
 import uz.elmurodov.services.project.ProjectService;
 import uz.elmurodov.ui.BaseUI;
+import uz.elmurodov.utils.BaseUtils;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
@@ -144,6 +145,20 @@ public class ProjectUI extends BaseUI<ProjectService> {
             Print.println(Color.RED, response.getBody().getData());
         } else {
             Print.println(Color.GREEN, "Successfully blocked project");
+        }
+    }
+
+    public void getMembers() {
+        String projectId = Input.getStr("Enter project id: ");
+        if (isNumeric(projectId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        ResponseEntity<Data<?>> response = service.getMembers(Long.valueOf(projectId));
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else {
+            System.out.println(BaseUtils.gson.toJson(response.getBody().getData()));
         }
     }
 }

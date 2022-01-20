@@ -6,6 +6,7 @@ import uz.elmurodov.exception.CustomerSQLException;
 import uz.elmurodov.repository.project.ProjectRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
+import uz.elmurodov.security.auth.AuthUser;
 import uz.elmurodov.security.project.Project;
 import uz.elmurodov.services.BaseService;
 
@@ -83,6 +84,15 @@ public class ProjectService extends BaseService<ProjectRepository, ProjectCreate
         try {
             List<Project> list = repository.list();
             return new ResponseEntity<>(new Data<>(list));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
+    }
+
+    public ResponseEntity<Data<?>> getMembers(Long id) {
+        try {
+            List<AuthUser> authUsers = repository.getMembers(id);
+            return new ResponseEntity<>(new Data<>(authUsers));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
