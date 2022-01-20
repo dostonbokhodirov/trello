@@ -8,7 +8,11 @@ import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.security.SecurityHolder;
 <<<<<<< HEAD
+<<<<<<< HEAD
 import uz.elmurodov.security.task.Task;
+=======
+import uz.elmurodov.security.organization.Organization;
+>>>>>>> origin/developer
 =======
 import uz.elmurodov.security.organization.Organization;
 >>>>>>> origin/developer
