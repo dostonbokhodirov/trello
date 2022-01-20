@@ -7,11 +7,14 @@ import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.task.TaskService;
 import uz.elmurodov.ui.BaseUI;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
+
+import java.util.List;
 
 /**
  * @author Doston Bokhodirov, Thu 12:05 AM. 1/20/2022
@@ -86,7 +89,11 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void list() {
-        Print.println(taskService.list());
+        ResponseEntity<Data<?>> response =  taskService.list();
+        List<Task> taskList = (List<Task>) response.getBody().getData();
+        for (int i = 0; i < taskList.size(); i++) {
+            Print.println(Color.BLUE, (i+1) + ". " + taskList.get(i).getName());
+        }
     }
 
     public void addMember() {
