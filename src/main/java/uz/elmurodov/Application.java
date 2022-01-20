@@ -5,6 +5,7 @@ import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.Menu;
+import uz.elmurodov.ui.column.ColumnUI;
 import uz.elmurodov.ui.organization.OrganizationUI;
 import uz.elmurodov.ui.project.ProjectUI;
 import uz.elmurodov.ui.task.TaskUI;
@@ -16,6 +17,7 @@ public class Application {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
     private static final OrganizationUI organizationUI = UNIContainer.getBean(OrganizationUI.class);
     private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
+    private static final ColumnUI columnUI = UNIContainer.getBean(ColumnUI.class);
     private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
 
     public static void main(String[] args) {
@@ -30,7 +32,7 @@ public class Application {
                 authUserUI.login();
             }
             case "TASKS" -> {
-
+                taskUI.list();
             }
             case "PROJECTS" -> {
                 Menu.getProjectMenu();
@@ -79,6 +81,12 @@ public class Application {
                 Print.println(Color.GREEN, "Bye");
                 return;
             }
+
+            case "JWA_COLUMN_LIST" -> {
+                columnUI.list();
+            }
+
+
             default -> {
                 Print.println(Color.RED, "Wrong choice");
             }

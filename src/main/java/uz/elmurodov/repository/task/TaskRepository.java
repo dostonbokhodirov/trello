@@ -10,6 +10,8 @@ import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.utils.BaseUtils;
 
+import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
@@ -57,5 +59,10 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
         String jsonData = (String) callProcedure(property.get("task.list"), Types.VARCHAR);
         return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Task>>() {
         }.getType());
+//        Type taskList = new TypeToken<List<Task>>() {
+//        }.getType();
+//        prepareArguments(SecurityHolder.authUserSession.getId());
+//        String dataJson = "" + callProcedure(property.get("task.list.user"), Types.VARCHAR);
+//        return BaseUtils.gson.fromJson(dataJson, taskList);
     }
 }

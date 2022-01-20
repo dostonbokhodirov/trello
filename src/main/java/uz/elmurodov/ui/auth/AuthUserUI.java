@@ -19,6 +19,8 @@ import static uz.elmurodov.security.SecurityHolder.projectSession;
  */
 public class AuthUserUI extends BaseUI<AuthUserService> {
 
+    private static final AuthUserService service = UNIContainer.getBean(AuthUserService.class);
+
     @Override
     public void create() {
 

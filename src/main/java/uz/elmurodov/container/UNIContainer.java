@@ -97,7 +97,7 @@ public class UNIContainer {
             case "ORGANIZATIONREPOSITORY" -> (T) ORGANIZATION_REPOSITORY;
             case "PROJECTREPOSITORY" -> (T) PROJECT_REPOSITORY;
             case "COLUMNREPOSITORY" -> (T) COLUMN_REPOSITORY;
-            case "TASLREPOSITORY" -> (T) TASK_REPOSITORY;
+            case "TASKREPOSITORY" -> (T) TASK_REPOSITORY;
             case "AUTHUSERREPOSITORY" -> (T) AUTH_USER_REPOSITORY;
 
             case "ORGANIZATIONUI" -> (T) ORGANIZATION_UI;
