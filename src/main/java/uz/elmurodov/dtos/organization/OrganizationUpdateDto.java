@@ -9,6 +9,6 @@ public class OrganizationUpdateDto extends GenericDto {
 	private String website;
 	private String name;
 	private String logo;
-	private Point location;
+	private String  location;
 	private String email;
 }

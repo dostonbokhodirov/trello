@@ -5,6 +5,7 @@ import uz.elmurodov.dtos.auth.AuthUserCreateDto;
 import uz.elmurodov.dtos.auth.AuthUserUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
+import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.auth.AuthUser;
 import uz.elmurodov.utils.BaseUtils;
 
@@ -26,7 +27,9 @@ public class AuthUserRepository extends BaseRepository<AuthUserCreateDto,
 
     @Override
     public Long create(AuthUserCreateDto dto) {
-        return null;
+        String json = BaseUtils.gson.toJson(dto);
+        prepareArguments(json, SecurityHolder.authUserSession.getId());
+        return (long) callProcedure(property.get("user.create"),Types.BIGINT);
     }
 
     @Override

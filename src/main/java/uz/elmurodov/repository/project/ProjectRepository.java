@@ -15,9 +15,6 @@ import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
-/**
- * @author Doston Bokhodirov, Wed 8:31 PM. 1/19/2022
- */
 public class ProjectRepository extends BaseRepository<ProjectCreateDto, ProjectUpdateDto, Project, Long, Boolean> {
     @Override
     public Long create(ProjectCreateDto dto) {

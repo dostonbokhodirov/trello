@@ -9,17 +9,18 @@ import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.organization.Organization;
 import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.BaseService;
 
 import java.util.List;
 
-/**
- * @author Doston Bokhodirov, Wed 10:04 AM. 1/19/2022
- */
 public class OrganizationService extends BaseService<OrganizationRepository,
         OrganizationCreateDto,
         OrganizationUpdateDto,
         Long> {
+    private static final OrganizationRepository organizationRepository =
+            UNIContainer.getBean(OrganizationRepository.class);
+
 
     public OrganizationService(OrganizationRepository repository) {
         super(repository);
@@ -32,7 +33,13 @@ public class OrganizationService extends BaseService<OrganizationRepository,
 
     @Override
     public ResponseEntity<Data<?>> get(Long id) {
-        return null;
+        try {
+            Organization organization = repository.get(id);
+            SecurityHolder.organizationSession = organization;
+            return new ResponseEntity<>(new Data<>(organization));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override
@@ -47,12 +54,22 @@ public class OrganizationService extends BaseService<OrganizationRepository,
 
     @Override
     public ResponseEntity<Data<?>> update(OrganizationUpdateDto dto) {
-        return null;
+        try {
+            return new ResponseEntity<>(new Data<>(organizationRepository.update(dto)));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
-        return null;
+        OrganizationUpdateDto dto = new OrganizationUpdateDto();
+        dto.setId(id);
+        try {
+            return new ResponseEntity<>(new Data<>(organizationRepository.delete(dto)));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override

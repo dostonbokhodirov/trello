@@ -1,9 +1,10 @@
 package uz.elmurodov.dtos.auth;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import uz.elmurodov.dtos.GenericBaseDto;
-
+@AllArgsConstructor
 @Data
 public class AuthUserCreateDto implements GenericBaseDto {
     private String password;

@@ -6,9 +6,6 @@ import uz.elmurodov.security.Auditable;
 
 import java.time.LocalDate;
 
-/**
- * @author Doston Bokhodirov, Wed 8:32 PM. 1/19/2022
- */
 @Data
 public class Project implements Auditable {
     private Long id;

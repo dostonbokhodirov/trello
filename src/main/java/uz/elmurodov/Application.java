@@ -1,6 +1,9 @@
 package uz.elmurodov;
 
 import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.task.Task;
+import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.Menu;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.column.ColumnUI;
@@ -58,9 +61,20 @@ public class Application {
                 Print.println(Color.GREEN, "Bye");
                 return;
             }
-            case "JWA_COLUMN_LIST" -> columnUI.list();
-            case "HHH" -> taskUI.create();
-            default -> Print.println(Color.RED, "Wrong choice");
+
+            case "JWA_COLUMN_LIST" -> {
+                columnUI.list();
+            }
+
+            case "HHH" -> {
+                taskUI.create();
+            }
+
+
+
+            default -> {
+                Print.println(Color.RED, "Wrong choice");
+            }
         }
         run();
     }

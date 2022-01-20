@@ -16,9 +16,6 @@ import uz.jl.utils.Print;
 
 import java.util.List;
 
-/**
- * @author Doston Bokhodirov, Thu 12:04 AM. 1/20/2022
- */
 public class ProjectUI extends BaseUI<ProjectService> {
 
     public ProjectUI(ProjectService service) {

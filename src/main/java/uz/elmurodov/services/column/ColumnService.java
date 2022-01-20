@@ -14,9 +14,7 @@ import uz.elmurodov.services.BaseService;
 
 import java.util.List;
 
-/**
- * @author Doston Bokhodirov, Wed 8:59 PM. 1/19/2022
- */
+
 public class ColumnService extends BaseService<ColumnRepository, ColumnCreateDto, ColumnUpdateDto, Long> {
     private static final ColumnRepository repository = UNIContainer.getBean(ColumnRepository.class);
 

@@ -11,9 +11,7 @@ import uz.elmurodov.services.BaseService;
 
 import java.util.List;
 
-/**
- * @author Doston Bokhodirov, Wed 8:45 PM. 1/19/2022
- */
+
 public class ProjectService extends BaseService<ProjectRepository, ProjectCreateDto, ProjectUpdateDto, Long> {
 
     public ProjectService(ProjectRepository repository) {
