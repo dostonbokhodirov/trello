@@ -43,12 +43,12 @@ public class OrganizationService extends BaseService<OrganizationRepository,
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(OrganizationUpdateDto dto) {
+    public ResponseEntity<Data<?>> block(Long id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(OrganizationUpdateDto dto) {
+    public ResponseEntity<Data<?>> unblock(Long id) {
         return null;
     }
 

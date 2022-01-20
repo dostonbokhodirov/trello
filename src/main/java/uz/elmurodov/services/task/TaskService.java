@@ -48,12 +48,12 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(TaskUpdateDto dto) {
+    public ResponseEntity<Data<?>> block(Long id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(TaskUpdateDto dto) {
+    public ResponseEntity<Data<?>> unblock(Long id) {
         return null;
     }
 

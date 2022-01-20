@@ -6,7 +6,6 @@ import uz.elmurodov.dtos.project.ProjectCreateDto;
 import uz.elmurodov.dtos.project.ProjectUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
-
 import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.project.Project;
 import uz.elmurodov.utils.BaseUtils;
@@ -15,7 +14,10 @@ import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
-public class ProjectRepository extends BaseRepository<ProjectCreateDto, ProjectUpdateDto, Project, Long, Boolean> {
+public class ProjectRepository extends BaseRepository<ProjectCreateDto,
+        ProjectUpdateDto,
+        Project,
+        Long> {
     @Override
     public Long create(ProjectCreateDto dto) {
         prepareArguments(BaseUtils.gson.toJson(dto), SecurityHolder.authUserSession.getId());
@@ -23,34 +25,35 @@ public class ProjectRepository extends BaseRepository<ProjectCreateDto, ProjectU
     }
 
     @Override
-    public Boolean block(ProjectUpdateDto dto) {
-        prepareArguments(SecurityHolder.authUserSession.getId(), BaseUtils.gson.toJson(dto));
-        return (Boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("block.project"), Types.VARCHAR);
+    public boolean block(Long id) {
+        prepareArguments(SecurityHolder.authUserSession.getId(), id);
+        return (boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("block.project"), Types.VARCHAR);
     }
 
     @Override
-    public Boolean unblock(ProjectUpdateDto dto) {
-        prepareArguments(SecurityHolder.authUserSession.getId(), BaseUtils.gson.toJson(dto));
-        return (Boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("unblock.project"), Types.VARCHAR);
+    public boolean unblock(Long id) {
+        prepareArguments(SecurityHolder.authUserSession.getId(), id);
+        return (boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("unblock.project"), Types.VARCHAR);
     }
 
     @Override
-    public Boolean update(ProjectUpdateDto dto) {
+    public boolean update(ProjectUpdateDto dto) {
         prepareArguments(SecurityHolder.authUserSession.getId(), BaseUtils.gson.toJson(dto));
-        return (Boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("unblock.project"), Types.VARCHAR);
+        return (boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("unblock.project"), Types.VARCHAR);
     }
 
     @Override
-    public Boolean delete(ProjectUpdateDto dto) {
-        prepareArguments(SecurityHolder.authUserSession.getId(), dto.getId());
-        return (Boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("delete.project"), Types.VARCHAR);
+    public boolean delete(Long id) {
+        prepareArguments(SecurityHolder.authUserSession.getId(), id);
+        return (boolean) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("delete.project"), Types.VARCHAR);
     }
 
     @Override
     public Project get(Long id) {
         prepareArguments(id, SecurityHolder.authUserSession.getId());
         String dataJson = (String) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("project.get"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(dataJson, new TypeToken<Project>(){}.getType());
+        return BaseUtils.gson.fromJson(dataJson, new TypeToken<Project>() {
+        }.getType());
     }
 
     @Override

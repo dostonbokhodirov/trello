@@ -15,6 +15,7 @@ import java.util.Objects;
 @Setter
 public class SecurityHolder {
     public static AuthUser authUserSession;
+    public static List<PermissionsItem> permissions = null;
 
     public static boolean hasPermission(String permission) {
         if (Objects.isNull(authUserSession))

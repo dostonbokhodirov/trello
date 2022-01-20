@@ -23,16 +23,16 @@ public abstract class BaseRepository<
         CR extends GenericBaseDto,
         D extends GenericDto,
         E extends Auditable,
-        K, B extends Serializable> {
+        K extends Serializable> {
     public abstract K create(CR dto);
 
-    public abstract B block(D dto);
+    public abstract boolean block(K id);
 
-    public abstract B unblock(D dto);
+    public abstract boolean unblock(K id);
 
-    public abstract B update(D dto);
+    public abstract boolean update(D dto);
 
-    public abstract B delete(D dto);
+    public abstract boolean delete(K id);
 
     public abstract E get(K id);
 

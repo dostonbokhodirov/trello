@@ -13,7 +13,10 @@ import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
-public class ColumnRepository extends BaseRepository<ColumnCreateDto, ColumnUpdateDto, Column, Long, Boolean> {
+public class ColumnRepository extends BaseRepository<ColumnCreateDto,
+        ColumnUpdateDto,
+        Column,
+        Long> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 
     @Override
@@ -22,23 +25,23 @@ public class ColumnRepository extends BaseRepository<ColumnCreateDto, ColumnUpda
     }
 
     @Override
-    public Boolean block(ColumnUpdateDto dto) {
-        return null;
+    public boolean block(Long dto) {
+        return true;
     }
 
     @Override
-    public Boolean unblock(ColumnUpdateDto dto) {
-        return null;
+    public boolean unblock(Long id) {
+        return true;
     }
 
     @Override
-    public Boolean update(ColumnUpdateDto dto) {
-        return null;
+    public boolean update(ColumnUpdateDto dto) {
+        return true;
     }
 
     @Override
-    public Boolean delete(ColumnUpdateDto dto) {
-        return null;
+    public boolean delete(Long id) {
+        return true;
     }
 
     @Override

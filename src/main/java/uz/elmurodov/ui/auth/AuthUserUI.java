@@ -1,7 +1,5 @@
 package uz.elmurodov.ui.auth;
 
-import com.google.gson.annotations.SerializedName;
-import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.auth.AuthUserCreateDto;
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
@@ -13,8 +11,8 @@ import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
 
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static uz.elmurodov.security.SecurityHolder.authUserSession;
-import static uz.elmurodov.security.SecurityHolder.projectSession;
 
 public class AuthUserUI extends BaseUI<AuthUserService> {
 
@@ -88,12 +86,16 @@ public class AuthUserUI extends BaseUI<AuthUserService> {
 
     public void logout() {
         SecurityHolder.setSessionUser(null);
-        SecurityHolder.permissions = null;
         Print.println(Color.GREEN, "Successfully logged out");
     }
 
     public boolean isLeader() {
-        ResponseEntity<Data<?>> response = service.isLeader(authUserSession.getId(), projectSession.getId());
+        String projectId = Input.getStr("Enter project id: ");
+        if (isNumeric(projectId)) {
+            Print.println(Color.RED, "Wrong input");
+            return false;
+        }
+        ResponseEntity<Data<?>> response = service.isLeader(authUserSession.getId(), Long.valueOf(projectId));
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
             return false;

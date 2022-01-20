@@ -33,12 +33,12 @@ public class ColumnService extends BaseService<ColumnRepository, ColumnCreateDto
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(ColumnUpdateDto dto) {
+    public ResponseEntity<Data<?>> block(Long id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(ColumnUpdateDto dto) {
+    public ResponseEntity<Data<?>> unblock(Long id) {
         return null;
     }
 

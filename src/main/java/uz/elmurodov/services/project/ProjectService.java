@@ -39,7 +39,7 @@ public class ProjectService extends BaseService<ProjectRepository, ProjectCreate
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(ProjectUpdateDto dto) {
+    public ResponseEntity<Data<?>> block(Long id) {
         try{
             repository.block(dto);
             return new ResponseEntity<>(new Data<>(true));
@@ -49,7 +49,7 @@ public class ProjectService extends BaseService<ProjectRepository, ProjectCreate
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(ProjectUpdateDto dto){
+    public ResponseEntity<Data<?>> unblock(Long id){
         try{
             repository.block(dto);
             return new ResponseEntity<>(new Data<>(true));
