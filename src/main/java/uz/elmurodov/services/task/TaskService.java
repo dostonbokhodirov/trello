@@ -26,9 +26,11 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
 
     @Override
     public ResponseEntity<Data<?>> create(TaskCreateDto dto) {
-        return null;
-
-
+        try {
+            return new ResponseEntity<>(new Data<>(taskRepository.create(dto)));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override
@@ -55,12 +57,22 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
 
     @Override
     public ResponseEntity<Data<?>> update(TaskUpdateDto dto) {
-        return null;
+        try {
+            return new ResponseEntity<>(new Data<>(taskRepository.update(dto)));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
-        return null;
+        TaskUpdateDto dto = new TaskUpdateDto();
+        dto.setId(id);
+        try {
+            return new ResponseEntity<>(new Data<>(taskRepository.delete(dto)));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override

@@ -1,6 +1,11 @@
 package uz.elmurodov.ui.task;
 
 import uz.elmurodov.container.UNIContainer;
+<<<<<<< HEAD
+=======
+import uz.elmurodov.dtos.task.TaskCreateDto;
+import uz.elmurodov.dtos.task.TaskUpdateDto;
+>>>>>>> origin/developer
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
@@ -22,33 +27,58 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void create() {
-        String column = Input.getStr("Column: ");
+        int columnID = Input.getNum("CoplumnId: ");
         String name = Input.getStr("Enter name: ");
         String description = Input.getStr("Enter description: ");
         String deadline = Input.getStr("Enter deadline\n(2012-12-12 12:12:12)\n: ");
-        String priority = Input.getStr("Enter priority: ");
-        String level = Input.getStr("Enter level\n(HARD/MEDIUM/EASY)\n: ");
-//        TaskCreateDto dto = new TaskCreateDto(level, column, name, description, deadline, priority);
-//        taskService.create(dto);
+        int priority = Input.getNum("Enter priority: ");
+        int level = Input.getNum("Enter level\n(HARD/MEDIUM/EASY)\n: ");
+        TaskCreateDto dto = new TaskCreateDto(level, columnID, name, description, deadline, priority);
+
+        ResponseEntity<Data<?>> response = taskService.create(dto);
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else {
+            Print.println(Color.GREEN, "Created task");
+        }
     }
 
     @Override
     public void block() {
-
     }
 
     @Override
     public void unblock() {
-
     }
 
     @Override
     public void delete() {
-
+        TaskUpdateDto dto = new TaskUpdateDto();
+        dto.setId(SecurityHolder.taskSession.getId());
+        ResponseEntity<Data<?>> response = taskService.delete(dto.getId());
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else {
+            Print.println(Color.GREEN, "Successfully deleted");
+        }
     }
 
     @Override
     public void update() {
+        int column = Input.getNum("ColumnId: ");
+        String name = Input.getStr("Enter name: ");
+        String description = Input.getStr("Enter description: ");
+        String deadline = Input.getStr("Enter deadline\n(2012-12-12 12:12:12)\n: ");
+        int priority = Input.getNum("Enter priority: ");
+        int level = Input.getNum("Enter level\n(3=HARD/2=MEDIUM/1=EASY)\n: ");
+        int order = Input.getNum("Enter order: ");
+        TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order);
+        ResponseEntity<Data<?>> response = taskService.update(dto);
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else {
+            Print.println(Color.GREEN, "Updated");
+        }
     }
 
     @Override
