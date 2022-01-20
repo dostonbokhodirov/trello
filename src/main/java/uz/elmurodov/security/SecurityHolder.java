@@ -15,11 +15,6 @@ import java.util.Objects;
 @Setter
 public class SecurityHolder {
     public static AuthUser authUserSession;
-    public static Organization organizationSession;
-    public static Project projectSession = new Project();
-    public static Task taskSession;
-    public static Column columnSession;
-    public static List<PermissionsItem> permissions;
 
     public static boolean hasPermission(String permission) {
         if (Objects.isNull(authUserSession))
