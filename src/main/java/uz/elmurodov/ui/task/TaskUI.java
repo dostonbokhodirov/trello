@@ -1,11 +1,10 @@
 package uz.elmurodov.ui.task;
 
 import uz.elmurodov.container.UNIContainer;
-<<<<<<< HEAD
-=======
+
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
->>>>>>> origin/developer
+
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
