@@ -51,7 +51,9 @@ public class ProjectRepository extends BaseRepository<ProjectCreateDto, ProjectU
 
     @Override
     public Project get(Long id) {
-        return null;
+        prepareArguments(id, SecurityHolder.authUserSession.getId());
+        String dataJson = (String) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("project.get"), Types.VARCHAR);
+        return BaseUtils.gson.fromJson(dataJson, new TypeToken<Project>(){}.getType());
     }
 
     @Override

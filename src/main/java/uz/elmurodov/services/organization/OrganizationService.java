@@ -21,6 +21,10 @@ public class OrganizationService extends BaseService<OrganizationRepository,
         OrganizationUpdateDto,
         Long> {
 
+    public OrganizationService(OrganizationRepository repository) {
+        super(repository);
+    }
+
     @Override
     public ResponseEntity<Data<?>> create(OrganizationCreateDto dto) {
         return null;

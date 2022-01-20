@@ -1,9 +1,12 @@
 package uz.elmurodov.ui;
 
 import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.response.Data;
+import uz.elmurodov.response.ResponseEntity;
+import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.auth.RolesItem;
+import uz.elmurodov.security.project.Project;
 import uz.elmurodov.services.project.ProjectService;
-import uz.elmurodov.services.task.TaskService;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.column.ColumnUI;
 import uz.elmurodov.ui.project.ProjectUI;
@@ -12,16 +15,19 @@ import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
 
+import java.util.List;
 import java.util.Objects;
 
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static uz.elmurodov.security.SecurityHolder.authUserSession;
+import static uz.elmurodov.security.SecurityHolder.projectSession;
 
 public class Menu {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
     private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
     private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
     private static final ColumnUI columnUI = UNIContainer.getBean(ColumnUI.class);
+    private static final ProjectService projectService = UNIContainer.getBean(ProjectService.class);
 
     public static void getMainMenu() {
         if (Objects.isNull(authUserSession)) {
@@ -96,8 +102,18 @@ public class Menu {
     }
 
     private static void projectDetailsMenu(long order) {
-        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
-        projectUI.get(order - 1);
+        ResponseEntity<Data<?>> response = projectService.list();
+        List<Project> projects = (List<Project>) response.getBody().getData();
+        SecurityHolder.projectSession = projects.get((int) (order - 1));
+       //projectUI.get(order - 1);
+        if (Objects.isNull(SecurityHolder.projectSession)) {
+            return;
+        }
+        Print.println(Color.BLUE, projectSession.getId());
+        Print.println(Color.BLUE, projectSession.getName());
+        Print.println(Color.BLUE, projectSession.getDescription());
+        Print.println(Color.BLUE, projectSession.getTz());
+        Print.println(Color.BLUE, projectSession.getBackground());
         Print.println(Color.GREEN, "Create Task  -> TASK_CREATE");
         Print.println(Color.GREEN, "Enter Task  -> TASK_ENTER");
         Print.println(Color.GREEN, "Create Column  -> COLUMN_CREATE");
@@ -164,7 +180,6 @@ public class Menu {
     }
 
     private static void taskDetailsMenu(Long order) {
-        TaskService taskService = UNIContainer.getBean(TaskService.class);
         taskUI.get(order - 1);
         Print.println(Color.GREEN, "Update Task -> TASK_CREATE");
         Print.println(Color.GREEN, "Delete Task -> TASK_DELETE");

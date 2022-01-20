@@ -24,6 +24,10 @@ import java.util.List;
 public class TaskService extends BaseService<TaskRepository, TaskCreateDto, TaskUpdateDto, Long> {
     private static final TaskRepository taskRepository = UNIContainer.getBean(TaskRepository.class);
 
+    public TaskService(TaskRepository repository) {
+        super(repository);
+    }
+
     @Override
     public ResponseEntity<Data<?>> create(TaskCreateDto dto) {
         try {

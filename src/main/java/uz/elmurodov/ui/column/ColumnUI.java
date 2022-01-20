@@ -21,7 +21,10 @@ import static uz.elmurodov.security.SecurityHolder.projectSession;
  * @author Doston Bokhodirov, Thu 12:05 AM. 1/20/2022
  */
 public class ColumnUI extends BaseUI<ColumnService> {
-    private static final ColumnService service = UNIContainer.getBean(ColumnService.class);
+
+    public ColumnUI(ColumnService service) {
+        super(service);
+    }
 
     @Override
     public void create() {

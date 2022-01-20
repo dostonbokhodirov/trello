@@ -53,26 +53,14 @@ public class Application {
             case "ORGANIZATION_DELETE" -> organizationUI.delete();
             case "ORGANIZATION_GET" -> organizationUI.get();
             case "ORGANIZATION_LIST" -> organizationUI.list();
-            case "LOGOUT" -> {
-                authUserUI.logout();
-            }
-
+            case "LOGOUT" -> authUserUI.logout();
             case "EXIT" -> {
                 Print.println(Color.GREEN, "Bye");
                 return;
             }
-
-            case "JWA_COLUMN_LIST" -> {
-                columnUI.list();
-            }
-
-            case "HHH" -> {
-                taskUI.create();
-            }
-
-            default -> {
-                Print.println(Color.RED, "Wrong choice");
-            }
+            case "JWA_COLUMN_LIST" -> columnUI.list();
+            case "HHH" -> taskUI.create();
+            default -> Print.println(Color.RED, "Wrong choice");
         }
         run();
     }

@@ -19,6 +19,11 @@ import java.util.List;
  */
 public class ColumnService extends BaseService<ColumnRepository, ColumnCreateDto, ColumnUpdateDto, Long> {
     private static final ColumnRepository repository = UNIContainer.getBean(ColumnRepository.class);
+
+    public ColumnService(ColumnRepository repository) {
+        super(repository);
+    }
+
     @Override
     public ResponseEntity<Data<?>> create(ColumnCreateDto dto) {
         return null;

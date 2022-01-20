@@ -64,17 +64,17 @@ public class UNIContainer {
         TASK_REPOSITORY = new TaskRepository();
         AUTH_USER_REPOSITORY = new AuthUserRepository();
 
-        ORGANIZATION_SERVICE = new OrganizationService();
+        ORGANIZATION_SERVICE = new OrganizationService(ORGANIZATION_REPOSITORY);
         PROJECT_SERVICE = new ProjectService(PROJECT_REPOSITORY);
-        COLUMN_SERVICE = new ColumnService();
-        TASK_SERVICE = new TaskService();
+        COLUMN_SERVICE = new ColumnService(COLUMN_REPOSITORY);
+        TASK_SERVICE = new TaskService(TASK_REPOSITORY);
         AUTH_USER_SERVICE = new AuthUserService(AUTH_USER_REPOSITORY);
 
-        ORGANIZATION_UI = new OrganizationUI();
-        PROJECT_UI = new ProjectUI();
-        COLUMN_UI = new ColumnUI();
-        TASK_UI = new TaskUI();
-        AUTH_USER_UI = new AuthUserUI();
+        ORGANIZATION_UI = new OrganizationUI(ORGANIZATION_SERVICE);
+        PROJECT_UI = new ProjectUI(PROJECT_SERVICE);
+        COLUMN_UI = new ColumnUI(COLUMN_SERVICE);
+        TASK_UI = new TaskUI(TASK_SERVICE);
+        AUTH_USER_UI = new AuthUserUI(AUTH_USER_SERVICE);
     }
 
     public static <T> T getBean(Class<T> bean) {

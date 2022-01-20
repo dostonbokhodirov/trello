@@ -19,9 +19,6 @@ public abstract class BaseService<R extends BaseRepository,
         K extends Serializable> {
     protected R repository;
 
-    protected BaseService() {
-    }
-
     public BaseService(R repository) {
         this.repository = repository;
     }

@@ -14,6 +14,10 @@ import uz.jl.utils.Print;
  */
 public class OrganizationUI extends BaseUI<OrganizationService> {
 
+    public OrganizationUI(OrganizationService service) {
+        super(service);
+    }
+
     @Override
     public void create() {
 

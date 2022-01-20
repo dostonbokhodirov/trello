@@ -15,6 +15,7 @@ import java.util.List;
  * @author Doston Bokhodirov, Wed 8:45 PM. 1/19/2022
  */
 public class ProjectService extends BaseService<ProjectRepository, ProjectCreateDto, ProjectUpdateDto, Long> {
+
     public ProjectService(ProjectRepository repository) {
         super(repository);
     }
@@ -31,7 +32,12 @@ public class ProjectService extends BaseService<ProjectRepository, ProjectCreate
 
     @Override
     public ResponseEntity<Data<?>> get(Long id) {
-        return null;
+        try {
+            Project project = repository.get(id);
+            return new ResponseEntity<>(new Data<>(project));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override

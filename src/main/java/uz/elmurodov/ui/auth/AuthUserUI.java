@@ -19,7 +19,9 @@ import static uz.elmurodov.security.SecurityHolder.projectSession;
  */
 public class AuthUserUI extends BaseUI<AuthUserService> {
 
-    private static final AuthUserService service = UNIContainer.getBean(AuthUserService.class);
+    public AuthUserUI(AuthUserService service) {
+        super(service);
+    }
 
     @Override
     public void create() {
@@ -81,7 +83,7 @@ public class AuthUserUI extends BaseUI<AuthUserService> {
         ResponseEntity<Data<?>> response = service.isLeader(authUserSession.getId(), projectSession.getId());
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
-            return (boolean) response.getBody().getData();
-        } else return false;
+            return false;
+        } else return true;
     }
 }
