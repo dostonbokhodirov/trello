@@ -24,4 +24,6 @@ public class TaskUpdateDto extends GenericDto {
 	private int priority;
 
 	private int order;
+
+	private String message;
 }

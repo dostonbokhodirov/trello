@@ -41,4 +41,8 @@ public class ProjectUI extends BaseUI<ProjectService> {
     public void list() {
 
     }
+
+    public void get(Long projectId) {
+
+    }
 }
