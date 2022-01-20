@@ -1,6 +1,5 @@
 package uz.elmurodov.services.task;
 
-import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.exception.CustomerSQLException;
@@ -60,7 +59,7 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
         try {
-            return new ResponseEntity<>(new Data<>(repository.delete(dto)));
+            return new ResponseEntity<>(new Data<>(repository.delete(id)));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
