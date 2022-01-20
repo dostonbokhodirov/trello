@@ -14,9 +14,7 @@ import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
-/**
- * @author Nodirbek Jureav, Wed 10:08 AM. 1/19/2022
- */
+
 public class OrganizationRepository extends BaseRepository<OrganizationCreateDto, OrganizationUpdateDto, Organization, Long, Boolean> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 

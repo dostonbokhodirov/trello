@@ -7,10 +7,6 @@ import uz.elmurodov.security.Auditable;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * @author Nodirbek Jureav, Wed 8:36 PM. 1/19/2022
- */
-
 @Data
 public class Column implements Auditable {
     @SerializedName("is_deleted")

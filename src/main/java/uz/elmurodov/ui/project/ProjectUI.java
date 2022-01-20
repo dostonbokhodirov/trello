@@ -17,9 +17,6 @@ import uz.jl.utils.Print;
 
 import java.util.List;
 
-/**
- * @author Nodirbek Juraev, Thu 12:04 AM. 1/20/2022
- */
 public class ProjectUI extends BaseUI<ProjectService> {
     @Override
     public void create() {

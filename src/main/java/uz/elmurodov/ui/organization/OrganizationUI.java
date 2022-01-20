@@ -9,9 +9,6 @@ import uz.elmurodov.ui.BaseUI;
 import uz.elmurodov.utils.BaseUtils;
 import uz.jl.utils.Print;
 
-/**
- * @author Nodirbek Juraev, Wed 10:01 AM. 1/19/2022
- */
 public class OrganizationUI extends BaseUI<OrganizationService> {
 
     @Override

@@ -19,7 +19,6 @@ public class Application {
     private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
     private static final ColumnUI columnUI = UNIContainer.getBean(ColumnUI.class);
     private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
-
     public static void main(String[] args) {
         run();
     }
@@ -32,7 +31,7 @@ public class Application {
                 authUserUI.login();
             }
             case "TASKS" -> {
-                taskUI.list();
+
             }
             case "PROJECTS" -> {
                 Menu.getProjectMenu();
@@ -80,14 +79,6 @@ public class Application {
             case "EXIT" -> {
                 Print.println(Color.GREEN, "Bye");
                 return;
-            }
-
-            case "JWA_COLUMN_LIST" -> {
-                columnUI.list();
-            }
-
-            case "HHH" ->{
-                taskUI.create();
             }
 
             default -> {

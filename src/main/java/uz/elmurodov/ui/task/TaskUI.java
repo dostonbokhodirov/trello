@@ -6,6 +6,7 @@ import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.enums.HttpStatus;
+import uz.elmurodov.repository.auth.AuthUserRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.SecurityHolder;
@@ -18,9 +19,6 @@ import uz.jl.utils.Print;
 
 import java.util.List;
 
-/**
- * @author Nodirbek Juraev, Thu 12:05 AM. 1/20/2022
- */
 public class TaskUI extends BaseUI<TaskService> {
     private static final TaskService taskService = UNIContainer.getBean(TaskService.class);
 
@@ -109,8 +107,10 @@ public class TaskUI extends BaseUI<TaskService> {
     }
 
     public void addMember() {
+
     }
 
+
     public void addCommet() {
-    }
+         }
 }

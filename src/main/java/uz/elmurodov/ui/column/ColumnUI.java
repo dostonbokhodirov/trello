@@ -17,9 +17,6 @@ import java.util.List;
 import static uz.elmurodov.security.SecurityHolder.authUserSession;
 import static uz.elmurodov.security.SecurityHolder.projectSession;
 
-/**
- * @author Nodirbek Juraev, Thu 12:05 AM. 1/20/2022
- */
 public class ColumnUI extends BaseUI<ColumnService> {
     private static final ColumnService service = UNIContainer.getBean(ColumnService.class);
 

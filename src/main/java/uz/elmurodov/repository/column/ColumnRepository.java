@@ -13,9 +13,6 @@ import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
-/**
- * @author Nodirbek Jureav, Wed 8:35 PM. 1/19/2022
- */
 public class ColumnRepository extends BaseRepository<ColumnCreateDto, ColumnUpdateDto, Column, Long, Boolean> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 
