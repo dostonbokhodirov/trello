@@ -12,6 +12,9 @@ import java.util.List;
 
 /**
  * @param <R> -> Repository
+ *            CR -> Create Dto
+ *            D-> Dto
+ *            K->Key
  */
 public abstract class BaseService<R extends BaseRepository,
         CR extends GenericBaseDto,

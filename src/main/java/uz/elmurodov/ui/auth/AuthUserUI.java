@@ -15,7 +15,7 @@ import static uz.elmurodov.security.SecurityHolder.authUserSession;
 import static uz.elmurodov.security.SecurityHolder.projectSession;
 
 /**
- * @author Doston Bokhodirov, Mon 2:43 PM. 1/17/2022
+ * @author Nodirbek Juraev, Mon 2:43 PM. 1/17/2022
  */
 public class AuthUserUI extends BaseUI<AuthUserService> {
 

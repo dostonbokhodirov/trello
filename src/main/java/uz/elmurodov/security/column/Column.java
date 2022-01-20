@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 /**
- * @author Doston Bokhodirov, Wed 8:36 PM. 1/19/2022
+ * @author Nodirbek Jureav, Wed 8:36 PM. 1/19/2022
  */
 
 @Data

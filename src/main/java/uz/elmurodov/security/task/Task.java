@@ -7,7 +7,7 @@ import uz.elmurodov.security.Auditable;
 import java.time.LocalDate;
 
 /**
- * @author Doston Bokhodirov, Wed 8:39 PM. 1/19/2022
+ * @author Nodirbek Jureav, Wed 8:39 PM. 1/19/2022
  */
 @Data
 public class Task implements Auditable {

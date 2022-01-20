@@ -16,7 +16,7 @@ import java.sql.Types;
 import java.util.List;
 
 /**
- * @author Doston Bokhodirov, Wed 8:38 PM. 1/19/2022
+ * @author Nodirbek Jureav, Wed 8:38 PM. 1/19/2022
  */
 public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto, Task, Long, Boolean> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);

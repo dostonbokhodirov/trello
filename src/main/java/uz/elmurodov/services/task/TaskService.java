@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 import java.util.List;
 
 /**
- * @author Doston Bokhodirov, Wed 9:01 PM. 1/19/2022
+ * @author Nodirbek Juraev, Wed 9:01 PM. 1/19/2022
  */
 public class TaskService extends BaseService<TaskRepository, TaskCreateDto, TaskUpdateDto, Long> {
     private static final TaskRepository taskRepository = UNIContainer.getBean(TaskRepository.class);

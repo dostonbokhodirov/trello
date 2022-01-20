@@ -10,7 +10,7 @@ import uz.elmurodov.utils.BaseUtils;
 import uz.jl.utils.Print;
 
 /**
- * @author Doston Bokhodirov, Wed 10:01 AM. 1/19/2022
+ * @author Nodirbek Juraev, Wed 10:01 AM. 1/19/2022
  */
 public class OrganizationUI extends BaseUI<OrganizationService> {
 

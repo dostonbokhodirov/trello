@@ -14,7 +14,7 @@ import uz.elmurodov.services.BaseService;
 import java.util.List;
 
 /**
- * @author Doston Bokhodirov, Wed 10:04 AM. 1/19/2022
+ * @author Nodirbek Jureav, Wed 10:04 AM. 1/19/2022
  */
 public class OrganizationService extends BaseService<OrganizationRepository,
         OrganizationCreateDto,
