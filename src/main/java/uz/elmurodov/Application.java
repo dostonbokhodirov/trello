@@ -69,15 +69,8 @@ public class Application {
             case "HHH" -> {
                 taskUI.create();
             }
-<<<<<<< HEAD
-
-            case "HHH" ->{
 
 
-                taskUI.create();
-            }
-=======
->>>>>>> origin/developer
 
             default -> {
                 Print.println(Color.RED, "Wrong choice");
