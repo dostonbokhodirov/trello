@@ -1,14 +1,17 @@
 package uz.elmurodov.ui.task;
 
+import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.auth.AuthUser;
 import uz.elmurodov.security.task.Task;
+import uz.elmurodov.services.project.ProjectService;
 import uz.elmurodov.services.task.TaskService;
 import uz.elmurodov.ui.BaseUI;
+import uz.elmurodov.ui.project.ProjectUI;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
@@ -62,7 +65,7 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void update() {
-        long taskId  = Input.getNum("Enter id of task: ");
+        long taskId = Input.getNum("Enter id of task: ");
         int column = Input.getNum("ColumnId: ");
         String name = Input.getStr("Enter name: ");
         String description = Input.getStr("Enter description: ");
@@ -118,10 +121,19 @@ public class TaskUI extends BaseUI<TaskService> {
     }
 
     public void addMember() {
+        ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
+        ProjectService projectService = UNIContainer.getBean(ProjectService.class);
+        String projectId = Input.getStr("Enter project id: ");
+        ResponseEntity<Data<?>> response = projectService.getMembers(projectId);
+        List<AuthUser> authUsers = (List<AuthUser>) response.getBody().getData();
+        for (AuthUser authUser : authUsers) {
+            Print.println(Color.BLUE, authUser.getUsername());
+        }
 
+        String memberId = Input.getStr();
     }
 
-    public void removeMember(){
+    public void removeMember() {
 
     }
 
