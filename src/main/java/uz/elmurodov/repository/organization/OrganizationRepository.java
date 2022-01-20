@@ -38,12 +38,16 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
 
     @Override
     public Boolean update(OrganizationUpdateDto dto) {
-        return null;
+        String json = BaseUtils.gson.toJson(dto);
+        prepareArguments(json, SecurityHolder.organizationSession.getId());
+        return (Boolean) callProcedure("organization.update", Types.BOOLEAN);
     }
 
     @Override
     public Boolean delete(OrganizationUpdateDto dto) {
-        return null;
+        prepareArguments(SecurityHolder.organizationSession.getId(), dto.getId());
+        return (Boolean) callProcedure(property.
+                get("organization.delete"), Types.BOOLEAN);
     }
 
     @Override
