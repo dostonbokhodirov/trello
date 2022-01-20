@@ -4,7 +4,10 @@ import uz.elmurodov.container.UNIContainer;
 
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
+<<<<<<< HEAD
 
+=======
+>>>>>>> origin/developer
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
@@ -71,7 +74,12 @@ public class TaskUI extends BaseUI<TaskService> {
         int priority = Input.getNum("Enter priority: ");
         int level = Input.getNum("Enter level\n(3=HARD/2=MEDIUM/1=EASY)\n: ");
         int order = Input.getNum("Enter order: ");
+<<<<<<< HEAD
         TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order);
+=======
+        String message = Input.getStr("Enter messsage: ");
+        TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order, message);
+>>>>>>> origin/developer
         ResponseEntity<Data<?>> response = taskService.update(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -82,25 +90,58 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void get() {
-        ResponseEntity<Data<?>> response = service.get(SecurityHolder.authUserSession.getId());
+        ResponseEntity<Data<?>> response = service.get(SecurityHolder.taskSession.getId());
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
-
         } else Print.println(Color.BLUE, response.getBody().getData());
     }
 
     @Override
     public void list() {
+<<<<<<< HEAD
         ResponseEntity<Data<?>> response =  taskService.list();
         List<Task> taskList = (List<Task>) response.getBody().getData();
         for (int i = 0; i < taskList.size(); i++) {
             Print.println(Color.BLUE, (i+1) + ". " + taskList.get(i).getName());
         }
+=======
+        ResponseEntity<Data<?>> response = service.list();
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else {
+            List<Task> tasks = (List<Task>) response.getBody().getData();
+            int i = 1;
+            for (Task task : tasks) {
+                Print.println(Color.BLUE, i++ + ". " + task.getName());
+            }
+        }
+//        Print.println(taskService.list());
+//        ResponseEntity<Data<?>> response =  taskService.list();
+//        List<Task> taskList = (List<Task>) response.getBody().getData();
+//        for (int i = 0; i < taskList.size(); i++) {
+//            Print.println(Color.BLUE, (i+1) + ". " + taskList.get(i).getName());
+//        }
+    }
+
+    public void get(Long taskId) {
+        ResponseEntity<Data<?>> response = service.get(taskId);
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else Print.println(Color.BLUE, response.getBody().getData());
+>>>>>>> origin/developer
     }
 
     public void addMember() {
     }
 
-    public void addCommet() {
+    public void addComment() {
+        String yourComment = Input.getStr("Add a comment : ");
+        TaskUpdateDto dto = new TaskUpdateDto();
+        dto.setMessage(yourComment);
+        ResponseEntity<Data<?>> response=taskService.addComment(dto);
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
+            Print.println(Color.RED, response.getBody().getData());
+        } else Print.println(Color.BLUE, "Your comment Successfully added");
+
     }
 }

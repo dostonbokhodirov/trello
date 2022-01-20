@@ -77,7 +77,20 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
 
     @Override
     public ResponseEntity<Data<?>> list() {
-        List<Task> tasks = taskRepository.list();
-        return new ResponseEntity<>(new Data<>(tasks, (long) tasks.size()));
+        try {
+            List<Task> tasks = repository.list();
+            return new ResponseEntity<>(new Data<>(tasks));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
+    }
+
+    public ResponseEntity<Data<?>> addComment(TaskUpdateDto dto){
+        try {
+            taskRepository.addTask(dto);
+            return new ResponseEntity<>(new Data<>(true));
+        }catch (CustomerSQLException e){
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 }

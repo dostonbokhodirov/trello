@@ -66,6 +66,9 @@ public class Application {
                 columnUI.list();
             }
 
+            case "HHH" -> {
+                taskUI.create();
+            }
 
             case "HHH" ->{
 
