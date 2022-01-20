@@ -9,6 +9,7 @@ import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.organization.Organization;
 import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.BaseService;
 
 import java.util.List;
@@ -28,7 +29,13 @@ public class OrganizationService extends BaseService<OrganizationRepository,
 
     @Override
     public ResponseEntity<Data<?>> get(Long id) {
-        return null;
+        try {
+            Organization organization = repository.get(id);
+            SecurityHolder.organizationSession = organization;
+            return new ResponseEntity<>(new Data<>(organization));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 
     @Override

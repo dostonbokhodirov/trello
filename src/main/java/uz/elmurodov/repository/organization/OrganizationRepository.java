@@ -8,6 +8,7 @@ import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.security.organization.Organization;
 import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.task.Task;
 import uz.elmurodov.utils.BaseUtils;
 
 import java.lang.reflect.Type;
@@ -47,7 +48,9 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
 
     @Override
     public Organization get(Long id) {
-        return null;
+        prepareArguments(id);
+        String jsonData = (String) callProcedure(property.get("organization.get"), Types.VARCHAR);
+        return BaseUtils.gson.fromJson(jsonData, Organization.class);
     }
 
     @Override
