@@ -1,6 +1,7 @@
 package uz.elmurodov.security;
 
 import lombok.Setter;
+import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.security.auth.AuthUser;
 import uz.elmurodov.security.auth.PermissionsItem;
 import uz.elmurodov.security.column.Column;
@@ -15,7 +16,7 @@ import java.util.Objects;
 public class SecurityHolder {
     public static AuthUser authUserSession;
     public static Organization organizationSession;
-    public static Project projectSession;
+    public static Project projectSession = new Project();
     public static Task taskSession;
     public static Column columnSession;
     public static List<PermissionsItem> permissions;

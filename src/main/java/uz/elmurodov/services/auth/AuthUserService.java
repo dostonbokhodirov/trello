@@ -24,6 +24,7 @@ public class AuthUserService extends BaseService<AuthUserRepository,
         try {
             SecurityHolder.setSessionUser(repository.login(username, password));
             permissions = authUserSession.getPermissions();
+            projectSession.setId(3L); // TODO: 1/20/22 olib tashlash kerak, shunchaki test uchun
             return new ResponseEntity<>(new Data<>(true));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
