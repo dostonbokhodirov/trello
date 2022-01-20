@@ -15,7 +15,10 @@ import java.sql.Types;
 import java.util.List;
 
 
-public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto, Task, Long, Boolean> {
+public class TaskRepository extends BaseRepository<TaskCreateDto,
+        TaskUpdateDto,
+        Task,
+        Long> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 
     @Override
@@ -26,26 +29,26 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
     }
 
     @Override
-    public Boolean block(TaskUpdateDto dto) {
-        return null;
+    public boolean block(Long id) {
+        return true;
     }
 
     @Override
-    public Boolean unblock(TaskUpdateDto dto) {
-        return null;
+    public boolean unblock(Long id) {
+        return true;
     }
 
     @Override
-    public Boolean update(TaskUpdateDto dto) {
+    public boolean update(TaskUpdateDto dto) {
         String json = BaseUtils.gson.toJson(dto);
         prepareArguments(json, SecurityHolder.authUserSession.getId());
-        return (Boolean) callProcedure("task.update", Types.BOOLEAN);
+        return (boolean) callProcedure("task.update", Types.BOOLEAN);
     }
 
     @Override
-    public Boolean delete(TaskUpdateDto dto) {
-        prepareArguments(SecurityHolder.authUserSession.getId(), dto.getId());
-        return (Boolean) callProcedure(property.get("task.delete"), Types.BOOLEAN);
+    public boolean delete(Long id) {
+        prepareArguments(SecurityHolder.authUserSession.getId(), id);
+        return (boolean) callProcedure(property.get("task.delete"), Types.BOOLEAN);
     }
 
     @Override

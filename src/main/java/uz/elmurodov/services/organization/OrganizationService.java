@@ -8,8 +8,6 @@ import uz.elmurodov.repository.organization.OrganizationRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.organization.Organization;
-import uz.elmurodov.security.SecurityHolder;
-import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.BaseService;
 
 import java.util.List;
@@ -35,7 +33,6 @@ public class OrganizationService extends BaseService<OrganizationRepository,
     public ResponseEntity<Data<?>> get(Long id) {
         try {
             Organization organization = repository.get(id);
-            SecurityHolder.organizationSession = organization;
             return new ResponseEntity<>(new Data<>(organization));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
@@ -63,10 +60,8 @@ public class OrganizationService extends BaseService<OrganizationRepository,
 
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
-        OrganizationUpdateDto dto = new OrganizationUpdateDto();
-        dto.setId(id);
         try {
-            return new ResponseEntity<>(new Data<>(organizationRepository.delete(dto)));
+            return new ResponseEntity<>(new Data<>(organizationRepository.delete(id)));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }

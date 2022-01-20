@@ -9,7 +9,6 @@ import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.security.column.Column;
 import uz.elmurodov.utils.BaseUtils;
 
-import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
@@ -57,6 +56,7 @@ public class ColumnRepository extends BaseRepository<ColumnCreateDto,
     public List<Column> list(long projectId) {
         prepareArguments(projectId);
         String jsonData = (String) callProcedure(property.get("column.list"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Column>>(){}.getType());
+        return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Column>>() {
+        }.getType());
     }
 }

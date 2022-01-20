@@ -37,14 +37,14 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
 
     @Override
     public boolean update(OrganizationUpdateDto dto) {
-        prepareArguments(SecurityHolder.organizationSession.getId(), BaseUtils.gson.toJson(dto));
+        prepareArguments(SecurityHolder.authUserSession.getOrganization().getId(), BaseUtils.gson.toJson(dto));
         return (boolean) callProcedure(UNIContainer.
                 getBean(DatabaseProperties.class).get("update.organization"), Types.VARCHAR);
     }
 
     @Override
     public boolean delete(Long id) {
-        prepareArguments(SecurityHolder.organizationSession.getId(), dto.getId());
+        prepareArguments(SecurityHolder.authUserSession.getOrganization().getId(), id);
         return (boolean) callProcedure(UNIContainer.
                 getBean(DatabaseProperties.class).get("delete.organization"), Types.VARCHAR);
     }

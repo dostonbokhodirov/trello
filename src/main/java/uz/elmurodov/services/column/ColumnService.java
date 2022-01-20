@@ -57,7 +57,7 @@ public class ColumnService extends BaseService<ColumnRepository, ColumnCreateDto
         return null;
     }
 
-    public ResponseEntity<Data<?>> list(long userId, long projectId) {
+    public ResponseEntity<Data<?>> list(long projectId) {
         try {
             List<Column> columns = repository.list(projectId);
             return new ResponseEntity<>(new Data<>(columns));

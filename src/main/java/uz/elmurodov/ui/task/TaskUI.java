@@ -1,12 +1,8 @@
 package uz.elmurodov.ui.task;
 
-import uz.elmurodov.container.UNIContainer;
-import com.google.gson.annotations.SerializedName;
-import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.enums.HttpStatus;
-import uz.elmurodov.repository.auth.AuthUserRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.SecurityHolder;
@@ -125,7 +121,7 @@ public class TaskUI extends BaseUI<TaskService> {
         String yourComment = Input.getStr("Add a comment : ");
         TaskUpdateDto dto = new TaskUpdateDto();
         dto.setMessage(yourComment);
-        ResponseEntity<Data<?>> response=service.addComment(dto);
+        ResponseEntity<Data<?>> response = service.addComment(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else Print.println(Color.BLUE, "Your comment Successfully added");

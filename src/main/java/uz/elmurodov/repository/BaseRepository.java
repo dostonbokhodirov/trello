@@ -17,7 +17,6 @@ import java.util.List;
  * @param <D> -> update dto
  * @param <E> -> entity
  * @param <K> -> key
- * @param <B> -> boolean
  */
 public abstract class BaseRepository<
         CR extends GenericBaseDto,

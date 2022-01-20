@@ -1,6 +1,7 @@
 package uz.elmurodov;
 
 import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.services.auth.AuthUserService;
 import uz.elmurodov.ui.Menu;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.column.ColumnUI;
@@ -20,6 +21,11 @@ public class Application {
 
     public static void main(String[] args) {
         run();
+    }
+
+    static{
+        AuthUserService authUserService = UNIContainer.getBean(AuthUserService.class);
+        authUserService.login("admin", "Doston_123");
     }
 
     private static void run() {

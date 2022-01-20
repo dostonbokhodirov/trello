@@ -1,21 +1,15 @@
 package uz.elmurodov.services.task;
 
-import com.google.gson.reflect.TypeToken;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.exception.CustomerSQLException;
-import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.task.TaskRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.BaseService;
-import uz.elmurodov.utils.BaseUtils;
-import uz.jl.utils.BaseUtil;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -39,7 +33,6 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     public ResponseEntity<Data<?>> get(Long id) {
         try {
             Task task = repository.get(id);
-            SecurityHolder.taskSession = task;
             return new ResponseEntity<>(new Data<>(task));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
@@ -68,10 +61,8 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
 
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
-        TaskUpdateDto dto = new TaskUpdateDto();
-        dto.setId(id);
         try {
-            return new ResponseEntity<>(new Data<>(taskRepository.delete(dto)));
+            return new ResponseEntity<>(new Data<>(taskRepository.delete(id)));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
@@ -87,11 +78,11 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
         }
     }
 
-    public ResponseEntity<Data<?>> addComment(TaskUpdateDto dto){
+    public ResponseEntity<Data<?>> addComment(TaskUpdateDto dto) {
         try {
             taskRepository.addTask(dto);
             return new ResponseEntity<>(new Data<>(true));
-        }catch (CustomerSQLException e){
+        } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }
