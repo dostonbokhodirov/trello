@@ -18,6 +18,8 @@ import uz.jl.utils.Print;
 
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isNumeric;
+
 public class TaskUI extends BaseUI<TaskService> {
 
     public TaskUI(TaskService service) {
@@ -26,13 +28,17 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void create() {
-        int columnID = Input.getNum("CoplumnId: ");
+        String columnID = Input.getStr("Column id: ");
+        if (!isNumeric(columnID)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
         String name = Input.getStr("Enter name: ");
         String description = Input.getStr("Enter description: ");
         String deadline = Input.getStr("Enter deadline\n(2012-12-12 12:12:12)\n: ");
         int priority = Input.getNum("Enter priority: ");
         int level = Input.getNum("Enter level\n(HARD/MEDIUM/EASY)\n: ");
-        TaskCreateDto dto = new TaskCreateDto(level, columnID, name, description, deadline, priority);
+        TaskCreateDto dto = new TaskCreateDto(level, Long.valueOf(columnID), name, description, deadline, priority);
 
         ResponseEntity<Data<?>> response = service.create(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
@@ -52,10 +58,12 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void delete() {
-        TaskUpdateDto dto = new TaskUpdateDto();
-        long taskId = Input.getNum("Enter id of user: ");
-        dto.setId(taskId);
-        ResponseEntity<Data<?>> response = service.delete(dto.getId());
+        String taskId = Input.getStr("Enter task id: ");
+        if (!isNumeric(taskId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        ResponseEntity<Data<?>> response = service.delete(Long.valueOf(taskId));
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -65,8 +73,16 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void update() {
-        long taskId = Input.getNum("Enter id of task: ");
-        int column = Input.getNum("ColumnId: ");
+        String taskId = Input.getStr("Enter task id: ");
+        if (!isNumeric(taskId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        String columnId = Input.getStr("Enter column id: ");
+        if (!isNumeric(columnId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
         String name = Input.getStr("Enter name: ");
         String description = Input.getStr("Enter description: ");
         String deadline = Input.getStr("Enter deadline\n(2012-12-12 12:12:12)\n: ");
@@ -74,8 +90,7 @@ public class TaskUI extends BaseUI<TaskService> {
         int level = Input.getNum("Enter level\n(3=HARD/2=MEDIUM/1=EASY)\n: ");
         int order = Input.getNum("Enter order: ");
         String message = Input.getStr("Enter message: ");
-        TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order, message);
-        dto.setId(taskId);
+        TaskUpdateDto dto = new TaskUpdateDto(level, Long.valueOf(columnId), name, description, deadline, priority, order, message);
         ResponseEntity<Data<?>> response = service.update(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -86,8 +101,12 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void get() {
-        long taskId = Input.getNum("Enter id of user: ");
-        ResponseEntity<Data<?>> response = service.get(taskId);
+        String taskId = Input.getStr("Enter task id: ");
+        if (!isNumeric(taskId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        ResponseEntity<Data<?>> response = service.get(Long.valueOf(taskId));
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else Print.println(Color.BLUE, response.getBody().getData());

@@ -15,9 +15,6 @@ import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static uz.elmurodov.security.SecurityHolder.authUserSession;
 
 public class AuthUserUI extends BaseUI<AuthUserService> {
-    public AuthUserUI(AuthUserService service) {
-        super(service);
-    }
 
     public AuthUserUI(AuthUserService service) {
         super(service);

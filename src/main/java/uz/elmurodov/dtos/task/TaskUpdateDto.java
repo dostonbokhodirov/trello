@@ -13,7 +13,7 @@ public class TaskUpdateDto extends GenericDto {
 	private int level;
 
 	@SerializedName("project_column_id")
-	private int projectColumnId;
+	private Long projectColumnId;
 
 	private String name;
 

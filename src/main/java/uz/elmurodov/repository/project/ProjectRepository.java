@@ -7,10 +7,10 @@ import uz.elmurodov.dtos.project.ProjectUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.security.auth.AuthUser;
 import uz.elmurodov.security.project.Project;
 import uz.elmurodov.utils.BaseUtils;
 
-import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
@@ -60,8 +60,14 @@ public class ProjectRepository extends BaseRepository<ProjectCreateDto,
     public List<Project> list() {
         prepareArguments(SecurityHolder.authUserSession.getId());
         String data = (String) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("list.project"), Types.VARCHAR);
-        Type type = new TypeToken<List<Project>>() {
-        }.getType();
-        return BaseUtils.gson.fromJson(data, type);
+        return BaseUtils.gson.fromJson(data, new TypeToken<List<Project>>() {
+        }.getType());
+    }
+
+    public List<AuthUser> getMembers(Long id) {
+        prepareArguments(id);
+        String dataJson = (String) callProcedure(UNIContainer.getBean(DatabaseProperties.class).get("project.get.members"), Types.VARCHAR);
+        return BaseUtils.gson.fromJson(dataJson, new TypeToken<List<AuthUser>>() {
+        }.getType());
     }
 }
