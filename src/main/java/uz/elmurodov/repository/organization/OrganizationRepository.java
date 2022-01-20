@@ -8,15 +8,16 @@ import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.organization.Organization;
-import uz.elmurodov.security.task.Task;
 import uz.elmurodov.utils.BaseUtils;
 
-import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
 
-public class OrganizationRepository extends BaseRepository<OrganizationCreateDto, OrganizationUpdateDto, Organization, Long, Boolean> {
+public class OrganizationRepository extends BaseRepository<OrganizationCreateDto,
+        OrganizationUpdateDto,
+        Organization,
+        Long> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 
     @Override
@@ -25,26 +26,26 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
     }
 
     @Override
-    public Boolean block(OrganizationUpdateDto dto) {
-        return null;
+    public boolean block(Long id) {
+        return true;
     }
 
     @Override
-    public Boolean unblock(OrganizationUpdateDto dto) {
-        return null;
+    public boolean unblock(Long id) {
+        return true;
     }
 
     @Override
-    public Boolean update(OrganizationUpdateDto dto) {
-        prepareArguments(SecurityHolder.organizationSession.getId(), BaseUtils.gson.toJson(dto));
-        return (Boolean) callProcedure(UNIContainer.
+    public boolean update(OrganizationUpdateDto dto) {
+        prepareArguments(SecurityHolder.authUserSession.getOrganization().getId(), BaseUtils.gson.toJson(dto));
+        return (boolean) callProcedure(UNIContainer.
                 getBean(DatabaseProperties.class).get("update.organization"), Types.VARCHAR);
     }
 
     @Override
-    public Boolean delete(OrganizationUpdateDto dto) {
-        prepareArguments(SecurityHolder.organizationSession.getId(), dto.getId());
-        return (Boolean) callProcedure(UNIContainer.
+    public boolean delete(Long id) {
+        prepareArguments(SecurityHolder.authUserSession.getOrganization().getId(), id);
+        return (boolean) callProcedure(UNIContainer.
                 getBean(DatabaseProperties.class).get("delete.organization"), Types.VARCHAR);
     }
 
@@ -52,7 +53,8 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
     public Organization get(Long id) {
         prepareArguments(id);
         String jsonData = (String) callProcedure(property.get("get.organization"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, Organization.class);    }
+        return BaseUtils.gson.fromJson(jsonData, Organization.class);
+    }
 
     @Override
     public List<Organization> list() {

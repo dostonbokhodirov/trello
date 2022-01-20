@@ -3,9 +3,7 @@ package uz.elmurodov.ui;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.auth.RolesItem;
-import uz.elmurodov.security.project.Project;
 import uz.elmurodov.services.project.ProjectService;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.column.ColumnUI;
@@ -15,12 +13,10 @@ import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
 
-import java.util.List;
 import java.util.Objects;
 
 import static org.apache.commons.lang3.StringUtils.isNumeric;
 import static uz.elmurodov.security.SecurityHolder.authUserSession;
-import static uz.elmurodov.security.SecurityHolder.projectSession;
 
 public class Menu {
     private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
@@ -30,15 +26,14 @@ public class Menu {
     private static final ProjectService projectService = UNIContainer.getBean(ProjectService.class);
 
     public static void getMainMenu() {
-        if (Objects.isNull(authUserSession)) {
-            Print.println(Color.GREEN, "Login -> LOGIN");
-        } else {
+        if (Objects.isNull(authUserSession)) Print.println(Color.GREEN, "Login -> LOGIN");
+        else {
             Print.println(Color.GREEN, "Tasks -> TASKS");
             Print.println(Color.GREEN, "Projects -> PROJECTS");
             for (RolesItem role : authUserSession.getRoles()) {
                 if (role.getCode().equalsIgnoreCase("HR") ||
                         role.getCode().equalsIgnoreCase("ADMIN")) {
-                    Print.println(Color.GREEN, "=====EMPLOYEE=====");
+                    Print.println(Color.GREEN, "==========EMPLOYEE==========");
                     Print.println(Color.GREEN, "Create Employee -> EMPLOYEE_CREATE");
                     Print.println(Color.GREEN, "Block Employee -> EMPLOYEE_BLOCK");
                     Print.println(Color.GREEN, "Unblock Employee -> EMPLOYEE_UNBLOCK");
@@ -48,7 +43,7 @@ public class Menu {
                 }
             }
             if (authUserSession.isSuperUser()) {
-                Print.println(Color.GREEN, "=====ORGANIZATION=====");
+                Print.println(Color.GREEN, "==========ORGANIZATION==========");
                 Print.println(Color.GREEN, "Create Organization  -> ORGANIZATION_CREATE");
                 Print.println(Color.GREEN, "Block Organization  -> ORGANIZATION_BLOCK");
                 Print.println(Color.GREEN, "Unblock Organization  -> ORGANIZATION_UNBLOCK");
@@ -68,15 +63,9 @@ public class Menu {
         Print.println(Color.GREEN, "Back  -> BACK");
         String choice = Input.getStr("Enter your choice: ");
         switch (choice.toUpperCase()) {
-            case "PROJECT_CREATE" -> {
-
-            }
-            case "PROJECT_LIST" -> {
-
-            }
-            case "PROJECT_ENTER" -> {
-                enterProjectMenu();
-            }
+            case "PROJECT_CREATE" -> projectUI.create();
+            case "PROJECT_LIST" -> projectUI.list();
+            case "PROJECT_ENTER" -> enterProjectMenu();
             case "BACK" -> {
                 return;
             }
@@ -103,58 +92,29 @@ public class Menu {
 
     private static void projectDetailsMenu(long order) {
         ResponseEntity<Data<?>> response = projectService.list();
-        List<Project> projects = (List<Project>) response.getBody().getData();
-        SecurityHolder.projectSession = projects.get((int) (order - 1));
-       //projectUI.get(order - 1);
-        if (Objects.isNull(SecurityHolder.projectSession)) {
-            return;
+        if (authUserUI.isLeader()) {
+            Print.println(Color.GREEN, "Update Member  -> MEMBER_UPDATE");
+            Print.println(Color.GREEN, "Delete Member  -> MEMBER_DELETE");
         }
-        Print.println(Color.BLUE, projectSession.getId());
-        Print.println(Color.BLUE, projectSession.getName());
-        Print.println(Color.BLUE, projectSession.getDescription());
-        Print.println(Color.BLUE, projectSession.getTz());
-        Print.println(Color.BLUE, projectSession.getBackground());
         Print.println(Color.GREEN, "Create Task  -> TASK_CREATE");
         Print.println(Color.GREEN, "Enter Task  -> TASK_ENTER");
         Print.println(Color.GREEN, "Create Column  -> COLUMN_CREATE");
         Print.println(Color.GREEN, "Update Column  -> COLUMN_UPDATE");
         Print.println(Color.GREEN, "Delete Column  -> COLUMN_DELETE");
         Print.println(Color.GREEN, "List Columns  -> COLUMN_LIST");
-        if (authUserUI.isLeader()) {
-            Print.println(Color.GREEN, "Update Member  -> MEMBER_UPDATE");
-            Print.println(Color.GREEN, "Delete Member  -> MEMBER_DELETE");
-        }
         Print.println(Color.GREEN, "List Members  -> MEMBER_LIST");
-        Print.println(Color.GREEN, "Back  -> BACK");
+        Print.println(Color.GREEN, "Back -> BACK");
         String choice = Input.getStr("Enter your choice: ");
         switch (choice.toUpperCase()) {
-            case "TASK_CREATE" -> {
-                taskUI.create();
-            }
-            case "TASK_ENTER" -> {
-                enterTaskMenu();
-            }
-            case "COLUMN_CREATE" -> {
-                columnUI.create();
-            }
-            case "COLUMN_UPDATE" -> {
-                columnUI.update();
-            }
-            case "COLUMN_DELETE" -> {
-                columnUI.delete();
-            }
-            case "COLUMN_LIST" -> {
-                columnUI.list();
-            }
-            case "MEMBER_UPDATE" -> {
-                columnUI.updateMember();
-            }
-            case "MEMBER_DELETE" -> {
-                columnUI.memberDelete();
-            }
-            case "MEMBER_LIST" -> {
-                columnUI.memberList();
-            }
+            case "TASK_CREATE" -> taskUI.create();
+            case "TASK_ENTER" -> enterTaskMenu();
+            case "COLUMN_CREATE" -> columnUI.create();
+            case "COLUMN_UPDATE" -> columnUI.update();
+            case "COLUMN_DELETE" -> columnUI.delete();
+            case "COLUMN_LIST" -> columnUI.list();
+            case "MEMBER_UPDATE" -> columnUI.updateMember();
+            case "MEMBER_DELETE" -> columnUI.memberDelete();
+            case "MEMBER_LIST" -> columnUI.memberList();
             case "BACK" -> {
                 return;
             }
@@ -167,14 +127,11 @@ public class Menu {
         taskUI.list();
         Print.println(Color.GREEN, "Back  -> BACK");
         String choice = Input.getStr("Choice Task: ");
-        if (isNumeric(choice)) {
-            taskDetailsMenu(Long.parseLong(choice));
+        if (isNumeric(choice)) taskDetailsMenu(Long.parseLong(choice));
+        else if ("BACK".equalsIgnoreCase(choice)) {
+            return;
         } else {
-            if ("BACK".equalsIgnoreCase(choice)) {
-                return;
-            } else {
-                Print.println(Color.RED, "Wrong choice");
-            }
+            Print.println(Color.RED, "Wrong choice");
         }
         enterTaskMenu();
     }
@@ -183,20 +140,19 @@ public class Menu {
         taskUI.get(order - 1);
         Print.println(Color.GREEN, "Update Task -> TASK_CREATE");
         Print.println(Color.GREEN, "Delete Task -> TASK_DELETE");
-        if (authUserUI.isLeader()) {
-            Print.println(Color.GREEN, "Create Member -> MEMBER_CREATE");
-        }
+        if (authUserUI.isLeader()) Print.println(Color.GREEN, "Create Member -> MEMBER_CREATE");
         Print.println(Color.GREEN, "Create Comment -> COMMENT_CREATE");
         Print.println(Color.GREEN, "Back  -> BACK");
         String choice = Input.getStr("Enter your choice: ");
-        if ("TASK_CREATE".equalsIgnoreCase(choice)) {
-        } else if ("TASK_DELETE".equalsIgnoreCase(choice)) {
-        } else if ("MEMBER_CREATE".equalsIgnoreCase(choice)) {
-        } else if ("COMMENT_CREATE".equalsIgnoreCase(choice)) {
-        } else if ("BACK".equalsIgnoreCase(choice)) {
-            return;
-        } else {
-            Print.println(Color.RED, "Wrong choice");
+        switch (choice.toUpperCase()) {
+            case "TASK_CREATE" -> taskUI.create();
+            case "TASK_DELETE" -> taskUI.delete();
+            case "MEMBER_CREATE" -> authUserUI.create();
+            case "COMMENT_CREATE" -> taskUI.addComment();
+            case "BACK" -> {
+                return;
+            }
+            default -> Print.println(Color.RED, "Wrong choice");
         }
         taskDetailsMenu(order);
     }

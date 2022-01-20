@@ -9,11 +9,13 @@ import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.security.column.Column;
 import uz.elmurodov.utils.BaseUtils;
 
-import java.lang.reflect.Type;
 import java.sql.Types;
 import java.util.List;
 
-public class ColumnRepository extends BaseRepository<ColumnCreateDto, ColumnUpdateDto, Column, Long, Boolean> {
+public class ColumnRepository extends BaseRepository<ColumnCreateDto,
+        ColumnUpdateDto,
+        Column,
+        Long> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 
     @Override
@@ -22,23 +24,23 @@ public class ColumnRepository extends BaseRepository<ColumnCreateDto, ColumnUpda
     }
 
     @Override
-    public Boolean block(ColumnUpdateDto dto) {
-        return null;
+    public boolean block(Long dto) {
+        return true;
     }
 
     @Override
-    public Boolean unblock(ColumnUpdateDto dto) {
-        return null;
+    public boolean unblock(Long id) {
+        return true;
     }
 
     @Override
-    public Boolean update(ColumnUpdateDto dto) {
-        return null;
+    public boolean update(ColumnUpdateDto dto) {
+        return true;
     }
 
     @Override
-    public Boolean delete(ColumnUpdateDto dto) {
-        return null;
+    public boolean delete(Long id) {
+        return true;
     }
 
     @Override
@@ -54,6 +56,7 @@ public class ColumnRepository extends BaseRepository<ColumnCreateDto, ColumnUpda
     public List<Column> list(long projectId) {
         prepareArguments(projectId);
         String jsonData = (String) callProcedure(property.get("column.list"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Column>>(){}.getType());
+        return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Column>>() {
+        }.getType());
     }
 }

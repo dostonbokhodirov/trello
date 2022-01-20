@@ -1,6 +1,6 @@
 package uz.elmurodov.ui.column;
 
-import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.column.Column;
@@ -11,11 +11,9 @@ import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
 
-
 import java.util.List;
 
-import static uz.elmurodov.security.SecurityHolder.authUserSession;
-import static uz.elmurodov.security.SecurityHolder.projectSession;
+import static org.apache.commons.lang3.StringUtils.isNumeric;
 
 public class ColumnUI extends BaseUI<ColumnService> {
 
@@ -59,8 +57,12 @@ public class ColumnUI extends BaseUI<ColumnService> {
 
     @Override
     public void list() {
-        ResponseEntity<Data<?>> response = service.list(authUserSession.getId(), projectSession.getId());
-        if (response.getStatus() != 200) {
+        String projectId = Input.getStr("Enter project id: ");
+        if (!isNumeric(projectId)) {
+            Print.println(Color.RED, "Wrong input");
+        }
+        ResponseEntity<Data<?>> response = service.list(Long.parseLong(projectId));
+        if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
             return;
         }
@@ -69,7 +71,7 @@ public class ColumnUI extends BaseUI<ColumnService> {
         for (int i = 0; i < columns.size(); i++) {
             Column column = columns.get(i);
             Print.println(Color.YELLOW, "--------------------------------------------------------------");
-            Print.println(Color.BLUE, (i+1) + ". " + column.getName());
+            Print.println(Color.BLUE, (i + 1) + ". " + column.getName());
             Print.println(Color.YELLOW, "--------------------------------------------------------------");
             List<TasksItem> tasks = column.getTasks();
             for (int j = 0; j < tasks.size(); j++) {

@@ -1,9 +1,7 @@
 package uz.elmurodov;
 
 import uz.elmurodov.container.UNIContainer;
-import uz.elmurodov.security.SecurityHolder;
-import uz.elmurodov.security.task.Task;
-import uz.elmurodov.ui.auth.AuthUserUI;
+import uz.elmurodov.services.auth.AuthUserService;
 import uz.elmurodov.ui.Menu;
 import uz.elmurodov.ui.auth.AuthUserUI;
 import uz.elmurodov.ui.column.ColumnUI;
@@ -25,6 +23,11 @@ public class Application {
         run();
     }
 
+    static{
+        AuthUserService authUserService = UNIContainer.getBean(AuthUserService.class);
+        authUserService.login("admin", "Doston_123");
+    }
+
     private static void run() {
         Menu.getMainMenu();
         String choice = Input.getStr("Enter your choice: ");
@@ -32,24 +35,12 @@ public class Application {
             case "LOGIN" -> authUserUI.login();
             case "TASKS" -> taskUI.list();
             case "PROJECTS" -> Menu.getProjectMenu();
-            case "EMPLOYEE_ADD" -> {
-
-            }
-            case "EMPLOYEE_BLOCK" -> {
-
-            }
-            case "EMPLOYEE_UNBLOCK" -> {
-
-            }
-            case "EMPLOYEE_DELETE" -> {
-
-            }
-            case "EMPLOYEE_GET" -> {
-
-            }
-            case "EMPLOYEE_LIST" -> {
-
-            }
+            case "EMPLOYEE_ADD" -> authUserUI.create();
+            case "EMPLOYEE_BLOCK" -> authUserUI.block();
+            case "EMPLOYEE_UNBLOCK" -> authUserUI.unblock();
+            case "EMPLOYEE_DELETE" -> authUserUI.delete();
+            case "EMPLOYEE_GET" -> authUserUI.get();
+            case "EMPLOYEE_LIST" -> authUserUI.list();
             case "ORGANIZATION_ADD" -> organizationUI.create();
             case "ORGANIZATION_BLOCK" -> organizationUI.block();
             case "ORGANIZATION_UNBLOCK" -> organizationUI.unblock();
@@ -61,20 +52,9 @@ public class Application {
                 Print.println(Color.GREEN, "Bye");
                 return;
             }
-
-            case "JWA_COLUMN_LIST" -> {
-                columnUI.list();
-            }
-
-            case "HHH" -> {
-                taskUI.create();
-            }
-
-
-
-            default -> {
-                Print.println(Color.RED, "Wrong choice");
-            }
+            case "JWA_COLUMN_LIST" -> columnUI.list();
+            case "HHH" -> taskUI.create();
+            default -> Print.println(Color.RED, "Wrong choice");
         }
         run();
     }

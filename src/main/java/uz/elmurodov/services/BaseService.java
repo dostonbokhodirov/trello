@@ -30,9 +30,9 @@ public abstract class BaseService<R extends BaseRepository,
 
     public abstract ResponseEntity<Data<?>> get(K id);
 
-    public abstract ResponseEntity<Data<?>> block(D dto);
+    public abstract ResponseEntity<Data<?>> block(K id);
 
-    public abstract ResponseEntity<Data<?>> unblock(D dto);
+    public abstract ResponseEntity<Data<?>> unblock(K id);
 
     public abstract ResponseEntity<Data<?>> update(D dto);
 

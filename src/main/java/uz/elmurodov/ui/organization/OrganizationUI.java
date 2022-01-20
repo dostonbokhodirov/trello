@@ -3,7 +3,6 @@ package uz.elmurodov.ui.organization;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.organization.OrganizationUpdateDto;
 import uz.elmurodov.enums.HttpStatus;
-import uz.elmurodov.repository.organization.OrganizationRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
 import uz.elmurodov.security.SecurityHolder;
@@ -38,9 +37,8 @@ public class OrganizationUI extends BaseUI<OrganizationService> {
 
     @Override
     public void delete() {
-        OrganizationUpdateDto dto = new OrganizationUpdateDto();
-        dto.setId(SecurityHolder.organizationSession.getId());
-        ResponseEntity<Data<?>> response = organizationService.delete(dto.getId());
+        Long organizationId = SecurityHolder.authUserSession.getOrganization().getId();
+        ResponseEntity<Data<?>> response = organizationService.delete(organizationId);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -71,7 +69,8 @@ public class OrganizationUI extends BaseUI<OrganizationService> {
 
     @Override
     public void get() {
-        ResponseEntity<Data<?>> response = service.get(SecurityHolder.organizationSession.getId());
+        Long organizationId = SecurityHolder.authUserSession.getOrganization().getId();
+        ResponseEntity<Data<?>> response = service.get(organizationId);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
 

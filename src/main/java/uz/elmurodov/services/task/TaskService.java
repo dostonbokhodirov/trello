@@ -1,21 +1,15 @@
 package uz.elmurodov.services.task;
 
-import com.google.gson.reflect.TypeToken;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.exception.CustomerSQLException;
-import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.task.TaskRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.BaseService;
-import uz.elmurodov.utils.BaseUtils;
-import uz.jl.utils.BaseUtil;
 
-import java.lang.reflect.Type;
 import java.util.List;
 
 
@@ -45,12 +39,12 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(TaskUpdateDto dto) {
+    public ResponseEntity<Data<?>> block(Long id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(TaskUpdateDto dto) {
+    public ResponseEntity<Data<?>> unblock(Long id) {
         return null;
     }
 
@@ -65,8 +59,6 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
 
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
-        TaskUpdateDto dto = new TaskUpdateDto();
-        dto.setId(id);
         try {
             return new ResponseEntity<>(new Data<>(repository.delete(dto)));
         } catch (CustomerSQLException e) {

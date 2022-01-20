@@ -46,12 +46,12 @@ public class AuthUserService extends BaseService<AuthUserRepository,
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(AuthUserUpdateDto dto) {
+    public ResponseEntity<Data<?>> block(Long id) {
         return null;
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(AuthUserUpdateDto dto) {
+    public ResponseEntity<Data<?>> unblock(Long id) {
         return null;
     }
 

@@ -16,6 +16,8 @@ import uz.jl.utils.Print;
 
 import java.util.List;
 
+import static org.apache.commons.lang3.StringUtils.isNumeric;
+
 public class ProjectUI extends BaseUI<ProjectService> {
 
     public ProjectUI(ProjectService service) {
@@ -43,9 +45,12 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void block() {
-        ProjectUpdateDto dto = new ProjectUpdateDto();
-        dto.setId(SecurityHolder.projectSession.getId());
-        ResponseEntity<Data<?>> response = service.block(dto);
+        String projectId = Input.getStr("Enter project id: ");
+        if (!isNumeric(projectId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        ResponseEntity<Data<?>> response = service.block(Long.valueOf(projectId));
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -55,9 +60,12 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void unblock() {
-        ProjectUpdateDto dto = new ProjectUpdateDto();
-        dto.setId(SecurityHolder.projectSession.getId());
-        ResponseEntity<Data<?>> response = service.block(dto);
+        String projectId = Input.getStr("Enter project id: ");
+        if (!isNumeric(projectId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        ResponseEntity<Data<?>> response = service.block(Long.valueOf(projectId));
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -67,7 +75,12 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void delete() {
-        ResponseEntity<Data<?>> response = service.delete(SecurityHolder.projectSession.getId());
+        String projectId = Input.getStr("Enter project id: ");
+        if (!isNumeric(projectId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        ResponseEntity<Data<?>> response = service.delete(Long.valueOf(projectId));
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -98,7 +111,12 @@ public class ProjectUI extends BaseUI<ProjectService> {
 
     @Override
     public void get() {
-        ResponseEntity<Data<?>> response = service.get(SecurityHolder.projectSession.getId());
+        String projectId = Input.getStr("Enter project id: ");
+        if (!isNumeric(projectId)) {
+            Print.println(Color.RED, "Wrong input");
+            return;
+        }
+        ResponseEntity<Data<?>> response = service.get(Long.valueOf(projectId));
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {

@@ -39,54 +39,52 @@ public class ProjectService extends BaseService<ProjectRepository, ProjectCreate
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(ProjectUpdateDto dto) {
-        try{
-            repository.block(dto);
+    public ResponseEntity<Data<?>> block(Long id) {
+        try {
+            repository.block(id);
             return new ResponseEntity<>(new Data<>(true));
-        }catch (CustomerSQLException e){
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(ProjectUpdateDto dto){
-        try{
-            repository.block(dto);
+    public ResponseEntity<Data<?>> unblock(Long id) {
+        try {
+            repository.block(id);
             return new ResponseEntity<>(new Data<>(true));
-        }catch (CustomerSQLException e){
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }
 
     @Override
     public ResponseEntity<Data<?>> update(ProjectUpdateDto dto) {
-        try{
-            repository.block(dto);
+        try {
+            repository.block(dto.getId());
             return new ResponseEntity<>(new Data<>(true));
-        }catch (CustomerSQLException e){
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }
 
     @Override
     public ResponseEntity<Data<?>> delete(Long id) {
-        try{
-            ProjectUpdateDto dto=new ProjectUpdateDto();
-            dto.setId(id);
-            repository.delete(dto);
+        try {
+            repository.delete(id);
             return new ResponseEntity<>(new Data<>(true));
-        }catch (CustomerSQLException e){
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }
 
     @Override
     public ResponseEntity<Data<?>> list() {
-        try{
-             List<Project> list= repository.list();
-             return new ResponseEntity<>(new Data<>(list));
-        }catch (CustomerSQLException e){
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()),e.getStatus());
+        try {
+            List<Project> list = repository.list();
+            return new ResponseEntity<>(new Data<>(list));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }
 }

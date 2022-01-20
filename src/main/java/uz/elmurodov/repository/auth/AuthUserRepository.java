@@ -15,8 +15,7 @@ import java.util.List;
 public class AuthUserRepository extends BaseRepository<AuthUserCreateDto,
         AuthUserUpdateDto,
         AuthUser,
-        Long,
-        Boolean> {
+        Long> {
     private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
 
     public AuthUser login(String userName, String password) {
@@ -33,23 +32,23 @@ public class AuthUserRepository extends BaseRepository<AuthUserCreateDto,
     }
 
     @Override
-    public Boolean block(AuthUserUpdateDto dto) {
+    public boolean block(Long id) {
         return true;
     }
 
     @Override
-    public Boolean unblock(AuthUserUpdateDto dto) {
-        return null;
+    public boolean unblock(Long id) {
+        return true;
     }
 
     @Override
-    public Boolean update(AuthUserUpdateDto dto) {
-        return null;
+    public boolean update(AuthUserUpdateDto dto) {
+        return true;
     }
 
     @Override
-    public Boolean delete(AuthUserUpdateDto dto) {
-        return null;
+    public boolean delete(Long id) {
+        return true;
     }
 
     @Override
