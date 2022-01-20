@@ -20,7 +20,6 @@ import java.util.List;
 
 
 public class TaskService extends BaseService<TaskRepository, TaskCreateDto, TaskUpdateDto, Long> {
-    private static final TaskRepository taskRepository = UNIContainer.getBean(TaskRepository.class);
 
     public TaskService(TaskRepository repository) {
         super(repository);
@@ -29,7 +28,7 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     @Override
     public ResponseEntity<Data<?>> create(TaskCreateDto dto) {
         try {
-            return new ResponseEntity<>(new Data<>(taskRepository.create(dto)));
+            return new ResponseEntity<>(new Data<>(repository.create(dto)));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
@@ -39,12 +38,10 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     public ResponseEntity<Data<?>> get(Long id) {
         try {
             Task task = repository.get(id);
-            SecurityHolder.taskSession = task;
             return new ResponseEntity<>(new Data<>(task));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
-
     }
 
     @Override
@@ -60,7 +57,7 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
     @Override
     public ResponseEntity<Data<?>> update(TaskUpdateDto dto) {
         try {
-            return new ResponseEntity<>(new Data<>(taskRepository.update(dto)));
+            return new ResponseEntity<>(new Data<>(repository.update(dto)));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
@@ -71,7 +68,7 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
         TaskUpdateDto dto = new TaskUpdateDto();
         dto.setId(id);
         try {
-            return new ResponseEntity<>(new Data<>(taskRepository.delete(dto)));
+            return new ResponseEntity<>(new Data<>(repository.delete(dto)));
         } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
@@ -87,11 +84,11 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
         }
     }
 
-    public ResponseEntity<Data<?>> addComment(TaskUpdateDto dto){
+    public ResponseEntity<Data<?>> addComment(TaskUpdateDto dto) {
         try {
-            taskRepository.addTask(dto);
+            repository.addTask(dto);
             return new ResponseEntity<>(new Data<>(true));
-        }catch (CustomerSQLException e){
+        } catch (CustomerSQLException e) {
             return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
         }
     }

@@ -54,7 +54,8 @@ public class TaskUI extends BaseUI<TaskService> {
     @Override
     public void delete() {
         TaskUpdateDto dto = new TaskUpdateDto();
-        dto.setId(SecurityHolder.taskSession.getId());
+        long taskId = Input.getNum("Enter id of user: ");
+        dto.setId(taskId);
         ResponseEntity<Data<?>> response = service.delete(dto.getId());
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -65,6 +66,7 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void update() {
+        long taskId  = Input.getNum("Enter id of task: ");
         int column = Input.getNum("ColumnId: ");
         String name = Input.getStr("Enter name: ");
         String description = Input.getStr("Enter description: ");
@@ -74,6 +76,7 @@ public class TaskUI extends BaseUI<TaskService> {
         int order = Input.getNum("Enter order: ");
         String message = Input.getStr("Enter message: ");
         TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order, message);
+        dto.setId(taskId);
         ResponseEntity<Data<?>> response = service.update(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -84,7 +87,8 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void get() {
-        ResponseEntity<Data<?>> response = service.get(SecurityHolder.taskSession.getId());
+        long taskId = Input.getNum("Enter id of user: ");
+        ResponseEntity<Data<?>> response = service.get(taskId);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else Print.println(Color.BLUE, response.getBody().getData());
@@ -121,11 +125,15 @@ public class TaskUI extends BaseUI<TaskService> {
 
     }
 
+    public void removeMember(){
+
+    }
+
     public void addComment() {
         String yourComment = Input.getStr("Add a comment : ");
         TaskUpdateDto dto = new TaskUpdateDto();
         dto.setMessage(yourComment);
-        ResponseEntity<Data<?>> response=service.addComment(dto);
+        ResponseEntity<Data<?>> response = service.addComment(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else Print.println(Color.BLUE, "Your comment Successfully added");

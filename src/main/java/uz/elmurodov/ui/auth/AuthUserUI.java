@@ -17,6 +17,9 @@ import static uz.elmurodov.security.SecurityHolder.authUserSession;
 import static uz.elmurodov.security.SecurityHolder.projectSession;
 
 public class AuthUserUI extends BaseUI<AuthUserService> {
+    public AuthUserUI(AuthUserService service) {
+        super(service);
+    }
 
     public AuthUserUI(AuthUserService service) {
         super(service);

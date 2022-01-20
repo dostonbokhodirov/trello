@@ -7,9 +7,8 @@ import uz.elmurodov.exception.CustomerSQLException;
 import uz.elmurodov.repository.organization.OrganizationRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.organization.Organization;
 import uz.elmurodov.security.SecurityHolder;
-import uz.elmurodov.security.task.Task;
+import uz.elmurodov.security.organization.Organization;
 import uz.elmurodov.services.BaseService;
 
 import java.util.List;
