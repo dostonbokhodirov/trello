@@ -30,7 +30,8 @@ public class Menu {
             Print.println(Color.GREEN, "Tasks -> TASKS");
             Print.println(Color.GREEN, "Projects -> PROJECTS");
             for (RolesItem role : authUserSession.getRoles()) {
-                if (role.getCode().equalsIgnoreCase("HR") || role.getCode().equalsIgnoreCase("ADMIN")) {
+                if (role.getCode().equalsIgnoreCase("HR") ||
+                        role.getCode().equalsIgnoreCase("ADMIN")) {
                     Print.println(Color.GREEN, "=====EMPLOYEE=====");
                     Print.println(Color.GREEN, "Create Employee -> EMPLOYEE_CREATE");
                     Print.println(Color.GREEN, "Block Employee -> EMPLOYEE_BLOCK");
@@ -91,7 +92,7 @@ public class Menu {
                 Print.println(Color.RED, "Wrong choice");
             }
         }
-        enterTaskMenu();
+        enterProjectMenu();
     }
 
     private static void projectDetailsMenu(long order) {

@@ -20,7 +20,7 @@ public class Project implements Auditable {
     private String description;
 
     @SerializedName("created_at")
-    private LocalDate createdAt;
+    private String createdAt;
 
     @SerializedName("created_by")
     private Integer createdBy;
@@ -32,7 +32,7 @@ public class Project implements Auditable {
     private Boolean isArchived;
 
     @SerializedName("updated_at")
-    private LocalDate updatedAt;
+    private String updatedAt;
 
     private String background;
 
