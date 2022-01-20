@@ -7,15 +7,7 @@ import uz.elmurodov.dtos.organization.OrganizationUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
 import uz.elmurodov.security.SecurityHolder;
-<<<<<<< HEAD
-<<<<<<< HEAD
-import uz.elmurodov.security.task.Task;
-=======
 import uz.elmurodov.security.organization.Organization;
->>>>>>> origin/developer
-=======
-import uz.elmurodov.security.organization.Organization;
->>>>>>> origin/developer
 import uz.elmurodov.utils.BaseUtils;
 
 import java.lang.reflect.Type;
@@ -45,23 +37,17 @@ public class OrganizationRepository extends BaseRepository<OrganizationCreateDto
 
     @Override
     public Boolean update(OrganizationUpdateDto dto) {
-        String json = BaseUtils.gson.toJson(dto);
-        prepareArguments(json, SecurityHolder.organizationSession.getId());
-        return (Boolean) callProcedure("organization.update", Types.BOOLEAN);
+        return null;
     }
 
     @Override
     public Boolean delete(OrganizationUpdateDto dto) {
-        prepareArguments(SecurityHolder.organizationSession.getId(), dto.getId());
-        return (Boolean) callProcedure(property.
-                get("organization.delete"), Types.BOOLEAN);
+        return null;
     }
 
     @Override
     public Organization get(Long id) {
-        prepareArguments(id);
-        String jsonData = (String) callProcedure(property.get("organization.get"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, Organization.class);
+        return null;
     }
 
     @Override

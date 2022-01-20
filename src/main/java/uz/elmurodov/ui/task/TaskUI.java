@@ -1,16 +1,8 @@
 package uz.elmurodov.ui.task;
 
 import uz.elmurodov.container.UNIContainer;
-
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-=======
->>>>>>> origin/developer
-=======
->>>>>>> origin/developer
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
@@ -77,17 +69,8 @@ public class TaskUI extends BaseUI<TaskService> {
         int priority = Input.getNum("Enter priority: ");
         int level = Input.getNum("Enter level\n(3=HARD/2=MEDIUM/1=EASY)\n: ");
         int order = Input.getNum("Enter order: ");
-<<<<<<< HEAD
-<<<<<<< HEAD
-        TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order);
-=======
         String message = Input.getStr("Enter messsage: ");
         TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order, message);
->>>>>>> origin/developer
-=======
-        String message = Input.getStr("Enter messsage: ");
-        TaskUpdateDto dto = new TaskUpdateDto(level, column, name, description, deadline, priority, order, message);
->>>>>>> origin/developer
         ResponseEntity<Data<?>> response = taskService.update(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -106,16 +89,6 @@ public class TaskUI extends BaseUI<TaskService> {
 
     @Override
     public void list() {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        ResponseEntity<Data<?>> response =  taskService.list();
-        List<Task> taskList = (List<Task>) response.getBody().getData();
-        for (int i = 0; i < taskList.size(); i++) {
-            Print.println(Color.BLUE, (i+1) + ". " + taskList.get(i).getName());
-        }
-=======
-=======
->>>>>>> origin/developer
         ResponseEntity<Data<?>> response = service.list();
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -139,10 +112,6 @@ public class TaskUI extends BaseUI<TaskService> {
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else Print.println(Color.BLUE, response.getBody().getData());
-<<<<<<< HEAD
->>>>>>> origin/developer
-=======
->>>>>>> origin/developer
     }
 
     public void addMember() {
