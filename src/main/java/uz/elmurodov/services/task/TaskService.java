@@ -10,6 +10,8 @@ import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.services.BaseService;
 
+import java.util.List;
+
 /**
  * @author Doston Bokhodirov, Wed 9:01 PM. 1/19/2022
  */
@@ -55,6 +57,11 @@ public class TaskService extends BaseService<TaskRepository, TaskCreateDto, Task
 
     @Override
     public ResponseEntity<Data<?>> list() {
-        return null;
+        try {
+            List<Task> tasks = repository.list();
+            return new ResponseEntity<>(new Data<>(tasks));
+        } catch (CustomerSQLException e) {
+            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+        }
     }
 }

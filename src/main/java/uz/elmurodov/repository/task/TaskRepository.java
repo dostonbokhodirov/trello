@@ -1,14 +1,15 @@
 package uz.elmurodov.repository.task;
 
+import com.google.gson.reflect.TypeToken;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.dtos.task.TaskCreateDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.BaseRepository;
+import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.utils.BaseUtils;
 
-import java.io.Serializable;
 import java.sql.Types;
 import java.util.List;
 
@@ -52,6 +53,9 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
 
     @Override
     public List<Task> list() {
-        return null;
+        prepareArguments(SecurityHolder.columnSession.getId());
+        String jsonData = (String) callProcedure(property.get("task.list"), Types.VARCHAR);
+        return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Task>>() {
+        }.getType());
     }
 }
