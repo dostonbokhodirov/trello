@@ -13,24 +13,24 @@ import java.time.LocalDate;
 public class Task implements Auditable {
     private Long id;
 
-    private int level;
+    private String level;
 
     private int projectColumnId;
 
     private String description;
 
     @SerializedName("created_at")
-    private LocalDate createdAt;
+    private String createdAt;
 
     @SerializedName("created_by")
     private Integer createdBy;
 
-    private int priority;
+    private String priority;
 
     private boolean isDeleted;
 
     @SerializedName("updated_at")
-    private LocalDate updatedAt;
+    private String updatedAt;
 
     private String name;
 

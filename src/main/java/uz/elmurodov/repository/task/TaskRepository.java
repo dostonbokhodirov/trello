@@ -23,7 +23,9 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
 
     @Override
     public Long create(TaskCreateDto dto) {
-        return null;
+        String json = BaseUtils.gson.toJson(dto);
+        prepareArguments(json, SecurityHolder.authUserSession.getId());
+        return (long) callProcedure(property.get("task.create"), Types.BIGINT);
     }
 
     @Override
@@ -38,12 +40,15 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
 
     @Override
     public Boolean update(TaskUpdateDto dto) {
-        return null;
+        String json = BaseUtils.gson.toJson(dto);
+        prepareArguments(json, SecurityHolder.authUserSession.getId());
+        return (Boolean) callProcedure("task.update", Types.BOOLEAN);
     }
 
     @Override
     public Boolean delete(TaskUpdateDto dto) {
-        return null;
+        prepareArguments(SecurityHolder.authUserSession.getId(), dto.getId());
+        return (Boolean) callProcedure(property.get("task.delete"), Types.BOOLEAN);
     }
 
     @Override
@@ -55,14 +60,10 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
 
     @Override
     public List<Task> list() {
-        prepareArguments(SecurityHolder.columnSession.getId());
-        String jsonData = (String) callProcedure(property.get("task.list"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Task>>() {
-        }.getType());
-//        Type taskList = new TypeToken<List<Task>>() {
-//        }.getType();
-//        prepareArguments(SecurityHolder.authUserSession.getId());
-//        String dataJson = "" + callProcedure(property.get("task.list.user"), Types.VARCHAR);
-//        return BaseUtils.gson.fromJson(dataJson, taskList);
+        Type taskList = new TypeToken<List<Task>>() {
+        }.getType();
+        prepareArguments(SecurityHolder.authUserSession.getId());
+        String dataJson = (String) callProcedure(property.get("task.list.user"), Types.VARCHAR);
+        return BaseUtils.gson.fromJson(dataJson, taskList);
     }
 }

@@ -8,6 +8,7 @@ import uz.elmurodov.security.column.TasksItem;
 import uz.elmurodov.services.column.ColumnService;
 import uz.elmurodov.ui.BaseUI;
 import uz.jl.utils.Color;
+import uz.jl.utils.Input;
 import uz.jl.utils.Print;
 
 
@@ -24,7 +25,7 @@ public class ColumnUI extends BaseUI<ColumnService> {
 
     @Override
     public void create() {
-
+        String columnName = Input.getStr("Name of column");
     }
 
     @Override

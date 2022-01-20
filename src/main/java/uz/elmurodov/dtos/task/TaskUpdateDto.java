@@ -1,9 +1,13 @@
 package uz.elmurodov.dtos.task;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import uz.elmurodov.dtos.GenericDto;
-
+@NoArgsConstructor
+@AllArgsConstructor
 @Data
 public class TaskUpdateDto extends GenericDto {
 	private int level;
