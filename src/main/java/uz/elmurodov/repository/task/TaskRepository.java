@@ -58,7 +58,7 @@ public class TaskRepository extends BaseRepository<TaskCreateDto, TaskUpdateDto,
         Type taskList = new TypeToken<List<Task>>() {
         }.getType();
         prepareArguments(SecurityHolder.authUserSession.getId());
-        String dataJson = "" + callProcedure(property.get("task.list.user"), Types.VARCHAR);
+        String dataJson = (String) callProcedure(property.get("task.list.user"), Types.VARCHAR);
         return BaseUtils.gson.fromJson(dataJson, taskList);
     }
 }
