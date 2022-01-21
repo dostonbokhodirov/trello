@@ -1,62 +1,58 @@
 package uz.elmurodov.repository.column;
 
 import com.google.gson.reflect.TypeToken;
-import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.criterias.project.ProjectCriteria;
 import uz.elmurodov.dtos.column.ColumnCreateDto;
+import uz.elmurodov.dtos.column.ColumnDto;
 import uz.elmurodov.dtos.column.ColumnUpdateDto;
-import uz.elmurodov.property.DatabaseProperties;
-import uz.elmurodov.repository.BaseRepository;
+import uz.elmurodov.exception.ApiRuntimeException;
+import uz.elmurodov.exception.CustomerSQLException;
+import uz.elmurodov.repository.AbstractRepository;
+import uz.elmurodov.repository.GenericCrudRepository;
+import uz.elmurodov.repository.GenericRepository;
+import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.column.Column;
-import uz.elmurodov.utils.BaseUtils;
 
 import java.sql.Types;
 import java.util.List;
 
-public class ColumnRepository extends BaseRepository<ColumnCreateDto,
+public class ColumnRepository extends AbstractRepository
+        implements GenericCrudRepository<ColumnDto,
+        ColumnCreateDto,
         ColumnUpdateDto,
-        Column,
-        Long> {
-    private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
+        Long>, GenericRepository<ColumnDto, ProjectCriteria> {
+
 
     @Override
     public Long create(ColumnCreateDto dto) {
+        try {
+            prepareArguments(gson.toJson(dto), SecurityHolder.authUserSession.getId());
+            return callProcedure(property.get("column.create"), Types.BIGINT, Long.class);
+        } catch (CustomerSQLException e) {
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
+        }
+    }
+
+    @Override
+    public ColumnDto get(Long id) {
         return null;
     }
 
     @Override
-    public boolean block(Long dto) {
-        return true;
+    public Boolean update(ColumnUpdateDto dto) {
+        return false;
     }
 
     @Override
-    public boolean unblock(Long id) {
-        return true;
+    public void delete(Long id) {
+
     }
 
     @Override
-    public boolean update(ColumnUpdateDto dto) {
-        return true;
-    }
-
-    @Override
-    public boolean delete(Long id) {
-        return true;
-    }
-
-    @Override
-    public Column get(Long id) {
-        return null;
-    }
-
-    @Override
-    public List<Column> list() {
-        return null;
-    }
-
-    public List<Column> list(long projectId) {
-        prepareArguments(projectId);
+    public List<ColumnDto> list(ProjectCriteria criteria) {
+        prepareArguments(criteria.getProjectId());
         String jsonData = (String) callProcedure(property.get("column.list"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, new TypeToken<List<Column>>() {
+        return gson.fromJson(jsonData, new TypeToken<List<ColumnDto>>() {
         }.getType());
     }
 }

@@ -1,80 +1,87 @@
 package uz.elmurodov.services.organization;
 
-import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.criterias.GenericCriteria;
 import uz.elmurodov.dtos.organization.OrganizationCreateDto;
+import uz.elmurodov.dtos.organization.OrganizationDto;
 import uz.elmurodov.dtos.organization.OrganizationUpdateDto;
+import uz.elmurodov.enums.HttpStatus;
+import uz.elmurodov.exception.ApiRuntimeException;
 import uz.elmurodov.exception.CustomerSQLException;
 import uz.elmurodov.repository.organization.OrganizationRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.organization.Organization;
-import uz.elmurodov.services.BaseService;
+import uz.elmurodov.security.SecurityHolder;
+import uz.elmurodov.services.AbstractService;
+import uz.elmurodov.services.GenericCrudService;
+import uz.elmurodov.services.GenericService;
 
 import java.util.List;
 
-public class OrganizationService extends BaseService<OrganizationRepository,
+public class OrganizationService extends AbstractService<OrganizationRepository>
+        implements GenericCrudService<
+        OrganizationDto,
         OrganizationCreateDto,
         OrganizationUpdateDto,
-        Long> {
-    private static final OrganizationRepository organizationRepository =
-            UNIContainer.getBean(OrganizationRepository.class);
-
+        Long>, GenericService<OrganizationDto, GenericCriteria> {
 
     public OrganizationService(OrganizationRepository repository) {
         super(repository);
     }
 
-    @Override
-    public ResponseEntity<Data<?>> create(OrganizationCreateDto dto) {
-        return null;
-    }
 
     @Override
-    public ResponseEntity<Data<?>> get(Long id) {
+    public ResponseEntity<Data<Long>> create(OrganizationCreateDto dto) {
         try {
-            Organization organization = repository.get(id);
-            return new ResponseEntity<>(new Data<>(organization));
+            return new ResponseEntity<>(new Data<>(repository.create(dto)));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getMessage(), e.getStatus());
         }
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(Long id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Data<?>> unblock(Long id) {
-        return null;
-    }
-
-    @Override
-    public ResponseEntity<Data<?>> update(OrganizationUpdateDto dto) {
+    public ResponseEntity<Data<OrganizationDto>> get(Long id) {
         try {
-            return new ResponseEntity<>(new Data<>(organizationRepository.update(dto)));
+            OrganizationDto organizationDto = repository.get(id);
+            return new ResponseEntity<>(new Data<>(organizationDto));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
         }
     }
 
     @Override
-    public ResponseEntity<Data<?>> delete(Long id) {
+    public ResponseEntity<Data<Boolean>> update(OrganizationUpdateDto dto) {
         try {
-            return new ResponseEntity<>(new Data<>(organizationRepository.delete(id)));
+            if (!hasPermission("ORGANIZATION_UPDATE"))
+                throw new ApiRuntimeException("PERMISSION_DENIED", HttpStatus.HTTP_401);
+
+            if (!SecurityHolder.authUserSession.isSuperUser()
+                    && !SecurityHolder.authUserSession.getOrganization().getId().equals(dto.getId()))
+                throw new ApiRuntimeException("PERMISSION_DENIED", HttpStatus.HTTP_401);
+
+            return new ResponseEntity<>(new Data<>(repository.update(dto)));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
         }
     }
 
     @Override
-    public ResponseEntity<Data<?>> list() {
+    public ResponseEntity<Data<Void>> delete(Long id) {
         try {
-            OrganizationRepository organizationRepository = UNIContainer.getBean(OrganizationRepository.class);
-            List<Organization> organizations = organizationRepository.list();
-            return new ResponseEntity<>(new Data<>(organizations, (long) organizations.size()));
+            repository.delete(id);
+            return new ResponseEntity<>(new Data<>(null));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
+        }
+    }
+
+
+    @Override
+    public ResponseEntity<Data<List<OrganizationDto>>> list(GenericCriteria criteria) {
+        try {
+            List<OrganizationDto> organizationsDto = repository.list(new GenericCriteria());
+            return new ResponseEntity<>(new Data<>(organizationsDto, organizationsDto.size()));
+        } catch (CustomerSQLException e) {
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
         }
     }
 }

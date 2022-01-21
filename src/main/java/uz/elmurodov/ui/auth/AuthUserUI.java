@@ -1,6 +1,7 @@
+/*
 package uz.elmurodov.ui.auth;
 
-import uz.elmurodov.dtos.auth.AuthUserCreateDto;
+import uz.elmurodov.dtos.auth.UserCreateDto;
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
@@ -30,7 +31,7 @@ public class AuthUserUI extends BaseUI<AuthUserService> {
         String phone = Input.getStr("Enter phone: ");
         String email = Input.getStr("Enter email: ");
         String language = Input.getStr("Enter language: ");
-        AuthUserCreateDto dto = new AuthUserCreateDto(password, phone, organizationId, lastName, language, firsName, email, username);
+        UserCreateDto dto = new UserCreateDto(password, phone, organizationId, lastName, language, firsName, email, username);
         ResponseEntity<Data<?>> response = service.create(dto);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
@@ -75,7 +76,7 @@ public class AuthUserUI extends BaseUI<AuthUserService> {
     public void login() {
         String username = Input.getStr("Enter username: ");
         String password = Input.getStr("Enter password: ");
-        ResponseEntity<Data<?>> response = service.login(username, password);
+        ResponseEntity<Data<Boolean>> response = service.login(username, password);
         if (!response.getStatus().equals(HttpStatus.HTTP_200.getCode())) {
             Print.println(Color.RED, response.getBody().getData());
         } else {
@@ -102,3 +103,4 @@ public class AuthUserUI extends BaseUI<AuthUserService> {
         } else return true;
     }
 }
+*/

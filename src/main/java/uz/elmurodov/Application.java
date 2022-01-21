@@ -3,57 +3,73 @@ package uz.elmurodov;
 import uz.elmurodov.container.UNIContainer;
 import uz.elmurodov.services.auth.AuthUserService;
 import uz.elmurodov.ui.Menu;
-import uz.elmurodov.ui.auth.AuthUserUI;
-import uz.elmurodov.ui.column.ColumnUI;
-import uz.elmurodov.ui.organization.OrganizationUI;
-import uz.elmurodov.ui.project.ProjectUI;
-import uz.elmurodov.ui.task.TaskUI;
+import uz.elmurodov.ui.UI;
 import uz.jl.utils.Color;
 import uz.jl.utils.Input;
 import uz.jl.utils.Print;
 
+import java.util.Locale;
+
 public class Application {
-    private static final AuthUserUI authUserUI = UNIContainer.getBean(AuthUserUI.class);
-    private static final OrganizationUI organizationUI = UNIContainer.getBean(OrganizationUI.class);
-    private static final ProjectUI projectUI = UNIContainer.getBean(ProjectUI.class);
-    private static final ColumnUI columnUI = UNIContainer.getBean(ColumnUI.class);
-    private static final TaskUI taskUI = UNIContainer.getBean(TaskUI.class);
+    private static final UI ui = UNIContainer.getBean(UI.class);
 
     public static void main(String[] args) {
         run();
     }
 
-    static{
-        AuthUserService authUserService = UNIContainer.getBean(AuthUserService.class);
-        authUserService.login("admin", "Doston_123");
-    }
+//    static {
+//        AuthUserService authUserService = UNIContainer.getBean(AuthUserService.class);
+//        authUserService.login("admin", "Doston_123");
+//    }
 
     private static void run() {
         Menu.getMainMenu();
-        String choice = Input.getStr("Enter your choice: ");
-        switch (choice.toUpperCase()) {
-            case "LOGIN" -> authUserUI.login();
-            case "TASKS" -> taskUI.list();
-            case "PROJECTS" -> Menu.getProjectMenu();
-            case "EMPLOYEE_ADD" -> authUserUI.create();
-            case "EMPLOYEE_BLOCK" -> authUserUI.block();
-            case "EMPLOYEE_UNBLOCK" -> authUserUI.unblock();
-            case "EMPLOYEE_DELETE" -> authUserUI.delete();
-            case "EMPLOYEE_GET" -> authUserUI.get();
-            case "EMPLOYEE_LIST" -> authUserUI.list();
-            case "ORGANIZATION_ADD" -> organizationUI.create();
-            case "ORGANIZATION_BLOCK" -> organizationUI.block();
-            case "ORGANIZATION_UNBLOCK" -> organizationUI.unblock();
-            case "ORGANIZATION_DELETE" -> organizationUI.delete();
-            case "ORGANIZATION_GET" -> organizationUI.get();
-            case "ORGANIZATION_LIST" -> organizationUI.list();
-            case "LOGOUT" -> authUserUI.logout();
+        String choice = Input.getStr("Enter your choice: ").toUpperCase(Locale.ROOT);
+        switch (choice) {
+            case "LOGIN" -> ui.login();
+            case "USER_BLOCK" -> ui.userBlock();
+            case "USER_CREATE" -> ui.userCreate();
+            case "USER_DELETE" -> ui.userDelete();
+//            case "USER_GET" -> ui.userUnblock();
+            case "USER_GET_LIST" -> ui.userList();
+            case "USER_INFO" -> ui.userDetails();
+            case "USER_UNBLOCK" -> ui.userUnblock();
+            case "PROJECT_CREATE" -> ui.projectCreate();
+            case "COLUMN_CREATE" -> ui.columnCreate();
+            case "PROJECT_DETAILS" -> ui.projectDetails();
+
+
+//            case "PROJECTS" -> ui.getProjectMenu();
+//            case "TASKS" -> ui.list();
+/*
+            ORGANIZATION_BLOCK
+                    ORGANIZATION_CHANGE_STATUS
+
+                    ORGANIZATION_DELETE
+            ORGANIZATION_GET
+                    ORGANIZATION_GET_DETAILS
+
+                    ORGANIZATION_UNBLOCK
+            ORGANIZATION_UPDATE
+*/
+            case "ORGANIZATION_CREATE" -> ui.organizationCreate();
+            case "ORGANIZATION_UPDATE" -> ui.organizationUpdate();
+            case "ORGANIZATION_BLOCK" -> ui.organizationBlock();
+            case "ORGANIZATION_UNBLOCK" -> ui.organizationUnblock();
+            case "ORGANIZATION_DELETE" -> ui.organizationDelete();
+            case "ORGANIZATION_GET" -> ui.organizationGet();
+            case "ORGANIZATION_GET_LIST" -> ui.organizationList();
+//            case "LOGOUT" -> ui.logout();
+            case "1" -> ui.loginAsSuper();
+            case "2" -> ui.loginAsAdmin();
+            case "3" -> ui.loginAsHr();
+            case "4" -> ui.loginAsEmp();
             case "EXIT" -> {
                 Print.println(Color.GREEN, "Bye");
                 return;
             }
-            case "JWA_COLUMN_LIST" -> columnUI.list();
-            case "HHH" -> taskUI.create();
+//            case "JWA_COLUMN_LIST" -> ui.list();
+//            case "HHH" -> ui.create();
             default -> Print.println(Color.RED, "Wrong choice");
         }
         run();

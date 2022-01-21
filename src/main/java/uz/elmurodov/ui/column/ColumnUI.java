@@ -1,3 +1,4 @@
+/*
 package uz.elmurodov.ui.column;
 
 import uz.elmurodov.enums.HttpStatus;
@@ -88,3 +89,4 @@ public class ColumnUI extends BaseUI<ColumnService> {
     public void updateMember() {
     }
 }
+*/

@@ -2,65 +2,61 @@ package uz.elmurodov.repository.organization;
 
 import com.google.gson.reflect.TypeToken;
 import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.criterias.GenericCriteria;
 import uz.elmurodov.dtos.organization.OrganizationCreateDto;
+import uz.elmurodov.dtos.organization.OrganizationDto;
 import uz.elmurodov.dtos.organization.OrganizationUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
-import uz.elmurodov.repository.BaseRepository;
+import uz.elmurodov.repository.AbstractRepository;
+import uz.elmurodov.repository.GenericCrudRepository;
+import uz.elmurodov.repository.GenericRepository;
 import uz.elmurodov.security.SecurityHolder;
-import uz.elmurodov.security.organization.Organization;
-import uz.elmurodov.utils.BaseUtils;
+import uz.elmurodov.settings.Types;
 
-import java.sql.Types;
+
 import java.util.List;
 
 
-public class OrganizationRepository extends BaseRepository<OrganizationCreateDto,
-        OrganizationUpdateDto,
-        Organization,
-        Long> {
-    private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
+public class OrganizationRepository extends AbstractRepository
+        implements GenericCrudRepository
+        <OrganizationDto,
+                OrganizationCreateDto,
+                OrganizationUpdateDto,
+                Long>, GenericRepository<OrganizationDto, GenericCriteria> {
+
 
     @Override
     public Long create(OrganizationCreateDto dto) {
-        return null;
+        prepareArguments(gson.toJson(dto), SecurityHolder.authUserSession.getId());
+        return (long) callProcedure(property.get("organization.create"), Types.BIGINT);
     }
 
     @Override
-    public boolean block(Long id) {
-        return true;
-    }
-
-    @Override
-    public boolean unblock(Long id) {
-        return true;
-    }
-
-    @Override
-    public boolean update(OrganizationUpdateDto dto) {
-        prepareArguments(SecurityHolder.authUserSession.getOrganization().getId(), BaseUtils.gson.toJson(dto));
+    public Boolean update(OrganizationUpdateDto dto) {
+        prepareArguments(gson.toJson(dto), SecurityHolder.authUserSession.getId());
         return (boolean) callProcedure(UNIContainer.
-                getBean(DatabaseProperties.class).get("update.organization"), Types.VARCHAR);
+                getBean(DatabaseProperties.class).get("organization.update"), Types.BOOLEAN);
     }
 
     @Override
-    public boolean delete(Long id) {
+    public void delete(Long id) {
         prepareArguments(SecurityHolder.authUserSession.getOrganization().getId(), id);
-        return (boolean) callProcedure(UNIContainer.
+        callProcedure(UNIContainer.
                 getBean(DatabaseProperties.class).get("delete.organization"), Types.VARCHAR);
     }
 
     @Override
-    public Organization get(Long id) {
+    public OrganizationDto get(Long id) {
         prepareArguments(id);
         String jsonData = (String) callProcedure(property.get("get.organization"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, Organization.class);
+        return gson.fromJson(jsonData, OrganizationDto.class);
     }
 
     @Override
-    public List<Organization> list() {
+    public List<OrganizationDto> list(GenericCriteria criteria) {
         prepareArguments(SecurityHolder.authUserSession.getId());
         String JsonData = (String) callProcedure(property.get("organization.list"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(JsonData, new TypeToken<List<Organization>>() {
+        return gson.fromJson(JsonData, new TypeToken<List<OrganizationDto>>() {
         }.getType());
     }
 }

@@ -5,7 +5,7 @@ import lombok.Data;
 import uz.elmurodov.dtos.GenericDto;
 
 @Data
-public class AuthUserUpdateDto extends GenericDto {
+public class UserUpdateDto extends GenericDto {
 	private String phone;
 
 	@SerializedName("last_name")

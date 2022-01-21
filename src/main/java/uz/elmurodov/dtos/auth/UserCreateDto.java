@@ -6,7 +6,7 @@ import lombok.Data;
 import uz.elmurodov.dtos.GenericBaseDto;
 @AllArgsConstructor
 @Data
-public class AuthUserCreateDto implements GenericBaseDto {
+public class UserCreateDto implements GenericBaseDto {
     private String password;
     private String phone;
     @SerializedName("organization_id")

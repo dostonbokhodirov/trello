@@ -2,6 +2,7 @@ package uz.elmurodov.response;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 import uz.elmurodov.enums.HttpStatus;
 import uz.elmurodov.security.Auditable;
 
@@ -10,6 +11,7 @@ import uz.elmurodov.security.Auditable;
  */
 @Getter
 @Setter
+@ToString
 public class ResponseEntity<D> {
     private D body;
     private Integer status;

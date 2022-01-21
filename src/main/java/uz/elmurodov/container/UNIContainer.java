@@ -1,5 +1,7 @@
 package uz.elmurodov.container;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import uz.elmurodov.property.ApplicationProperties;
 import uz.elmurodov.property.DatabaseProperties;
 import uz.elmurodov.repository.auth.AuthUserRepository;
@@ -7,16 +9,14 @@ import uz.elmurodov.repository.column.ColumnRepository;
 import uz.elmurodov.repository.organization.OrganizationRepository;
 import uz.elmurodov.repository.project.ProjectRepository;
 import uz.elmurodov.repository.task.TaskRepository;
+import uz.elmurodov.repository.user.UserRepository;
 import uz.elmurodov.services.auth.AuthUserService;
 import uz.elmurodov.services.column.ColumnService;
 import uz.elmurodov.services.organization.OrganizationService;
 import uz.elmurodov.services.project.ProjectService;
 import uz.elmurodov.services.task.TaskService;
-import uz.elmurodov.ui.auth.AuthUserUI;
-import uz.elmurodov.ui.column.ColumnUI;
-import uz.elmurodov.ui.organization.OrganizationUI;
-import uz.elmurodov.ui.project.ProjectUI;
-import uz.elmurodov.ui.task.TaskUI;
+import uz.elmurodov.services.user.UserService;
+import uz.elmurodov.ui.UI;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -39,15 +39,20 @@ public class UNIContainer {
     private static final ColumnService COLUMN_SERVICE;
     private static final TaskService TASK_SERVICE;
     private final static AuthUserService AUTH_USER_SERVICE;
+    private final static UserService USER_SERVICE;
+    private final static UserRepository USER_REPOSITORY;
 
-    private static final OrganizationUI ORGANIZATION_UI;
-    private static final ProjectUI PROJECT_UI;
-    private static final ColumnUI COLUMN_UI;
-    private static final TaskUI TASK_UI;
-    private static final AuthUserUI AUTH_USER_UI;
+    //    private static final OrganizationUI ORGANIZATION_UI;
+//    private static final ProjectUI PROJECT_UI;
+//    private static final ColumnUI COLUMN_UI;
+//    private static final TaskUI TASK_UI;
+//    private static final AuthUserUI AUTH_USER_UI;
+    private static final UI UI;
+    private static final Gson GSON;
 
 
     static {
+        GSON = new GsonBuilder().setPrettyPrinting().create();
         APPLICATION_PROPERTIES = new ApplicationProperties();
         DATABASE_PROPERTIES = new DatabaseProperties();
         try {
@@ -69,12 +74,16 @@ public class UNIContainer {
         COLUMN_SERVICE = new ColumnService(COLUMN_REPOSITORY);
         TASK_SERVICE = new TaskService(TASK_REPOSITORY);
         AUTH_USER_SERVICE = new AuthUserService(AUTH_USER_REPOSITORY);
+        USER_REPOSITORY = new UserRepository();
+        USER_SERVICE = new UserService(USER_REPOSITORY);
 
-        ORGANIZATION_UI = new OrganizationUI(ORGANIZATION_SERVICE);
-        PROJECT_UI = new ProjectUI(PROJECT_SERVICE);
-        COLUMN_UI = new ColumnUI(COLUMN_SERVICE);
-        TASK_UI = new TaskUI(TASK_SERVICE);
-        AUTH_USER_UI = new AuthUserUI(AUTH_USER_SERVICE);
+
+//        ORGANIZATION_UI = new OrganizationUI(ORGANIZATION_SERVICE);
+//        PROJECT_UI = new ProjectUI(PROJECT_SERVICE);
+//        COLUMN_UI = new ColumnUI(COLUMN_SERVICE);
+//        TASK_UI = new TaskUI(TASK_SERVICE);
+//        AUTH_USER_UI = new AuthUserUI(AUTH_USER_SERVICE);
+        UI = new UI(AUTH_USER_SERVICE, USER_SERVICE, ORGANIZATION_SERVICE);
     }
 
     public static <T> T getBean(Class<T> bean) {
@@ -100,11 +109,8 @@ public class UNIContainer {
             case "TASKREPOSITORY" -> (T) TASK_REPOSITORY;
             case "AUTHUSERREPOSITORY" -> (T) AUTH_USER_REPOSITORY;
 
-            case "ORGANIZATIONUI" -> (T) ORGANIZATION_UI;
-            case "PROJECTUI" -> (T) PROJECT_UI;
-            case "COLUMNUI" -> (T) COLUMN_UI;
-            case "TASKUI" -> (T) TASK_UI;
-            case "AUTHUSERUI" -> (T) AUTH_USER_UI;
+            case "UI" -> (T) UI;
+            case "GSON" -> (T) GSON;
 
             default -> throw new RuntimeException("Bean Not Found");
         };

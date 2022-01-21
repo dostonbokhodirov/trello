@@ -1,3 +1,4 @@
+/*
 package uz.elmurodov.ui.project;
 
 import uz.elmurodov.container.UNIContainer;
@@ -161,4 +162,9 @@ public class ProjectUI extends BaseUI<ProjectService> {
             System.out.println(BaseUtils.gson.toJson(response.getBody().getData()));
         }
     }
+
+    public void projectTasks(long projectId){
+
+    }
 }
+*/

@@ -1,100 +1,90 @@
 package uz.elmurodov.services.project;
 
+import uz.elmurodov.criterias.GenericCriteria;
 import uz.elmurodov.dtos.project.ProjectCreateDto;
+import uz.elmurodov.dtos.project.ProjectDto;
 import uz.elmurodov.dtos.project.ProjectUpdateDto;
+import uz.elmurodov.exception.ApiRuntimeException;
 import uz.elmurodov.exception.CustomerSQLException;
 import uz.elmurodov.repository.project.ProjectRepository;
 import uz.elmurodov.response.Data;
 import uz.elmurodov.response.ResponseEntity;
-import uz.elmurodov.security.auth.AuthUser;
-import uz.elmurodov.security.project.Project;
-import uz.elmurodov.services.BaseService;
+import uz.elmurodov.services.AbstractService;
+import uz.elmurodov.services.GenericCrudService;
+import uz.elmurodov.services.GenericService;
 
 import java.util.List;
 
 
-public class ProjectService extends BaseService<ProjectRepository, ProjectCreateDto, ProjectUpdateDto, Long> {
+public class ProjectService extends AbstractService<
+        ProjectRepository> implements GenericCrudService<
+        ProjectDto,
+        ProjectCreateDto,
+        ProjectUpdateDto,
+        Long>, GenericService<ProjectDto, GenericCriteria> {
 
     public ProjectService(ProjectRepository repository) {
         super(repository);
     }
 
+
     @Override
-    public ResponseEntity<Data<?>> create(ProjectCreateDto dto) {
+    public ResponseEntity<Data<Long>> create(ProjectCreateDto dto) {
         try {
-            repository.create(dto);
-            return new ResponseEntity<>(new Data<>(true));
+            return new ResponseEntity<>(new Data<>(repository.create(dto)));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
         }
     }
 
     @Override
-    public ResponseEntity<Data<?>> get(Long id) {
+    public ResponseEntity<Data<ProjectDto>> get(Long id) {
         try {
-            Project project = repository.get(id);
-            return new ResponseEntity<>(new Data<>(project));
+            ProjectDto projectDto = repository.get(id);
+            return new ResponseEntity<>(new Data<>(projectDto));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
+
         }
     }
 
     @Override
-    public ResponseEntity<Data<?>> block(Long id) {
+    public ResponseEntity<Data<Boolean>> update(ProjectUpdateDto dto) {
         try {
-            repository.block(id);
-            return new ResponseEntity<>(new Data<>(true));
+            return new ResponseEntity<>(new Data<>(repository.update(dto)));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
+
         }
     }
 
     @Override
-    public ResponseEntity<Data<?>> unblock(Long id) {
-        try {
-            repository.block(id);
-            return new ResponseEntity<>(new Data<>(true));
-        } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
-        }
-    }
-
-    @Override
-    public ResponseEntity<Data<?>> update(ProjectUpdateDto dto) {
-        try {
-            repository.block(dto.getId());
-            return new ResponseEntity<>(new Data<>(true));
-        } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
-        }
-    }
-
-    @Override
-    public ResponseEntity<Data<?>> delete(Long id) {
+    public ResponseEntity<Data<Void>> delete(Long id) {
         try {
             repository.delete(id);
-            return new ResponseEntity<>(new Data<>(true));
+            return new ResponseEntity<>(new Data<>(null));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
         }
     }
+
 
     @Override
-    public ResponseEntity<Data<?>> list() {
+    public ResponseEntity<Data<List<ProjectDto>>> list(GenericCriteria criteria) {
         try {
-            List<Project> list = repository.list();
-            return new ResponseEntity<>(new Data<>(list));
+            List<ProjectDto> projectDtoList = repository.list(new GenericCriteria());
+            return new ResponseEntity<>(new Data<>(projectDtoList, projectDtoList.size()));
         } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+            throw new ApiRuntimeException(e.getFriendlyMessage(), e.getStatus());
         }
     }
 
-    public ResponseEntity<Data<?>> getMembers(Long id) {
-        try {
-            List<AuthUser> authUsers = repository.getMembers(id);
-            return new ResponseEntity<>(new Data<>(authUsers));
-        } catch (CustomerSQLException e) {
-            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
-        }
-    }
+//    public ResponseEntity<Data<List<UserDto>>> getMembers(Long id) {
+//        try {
+//            List<Session> authUsers = repository.getMembers(id);
+//            return new ResponseEntity<>(new Data<>(authUsers));
+//        } catch (CustomerSQLException e) {
+//            return new ResponseEntity<>(new Data<>(e.getFriendlyMessage()), e.getStatus());
+//        }
+//    }
 }

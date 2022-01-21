@@ -2,10 +2,14 @@ package uz.elmurodov.repository.task;
 
 import com.google.gson.reflect.TypeToken;
 import uz.elmurodov.container.UNIContainer;
+import uz.elmurodov.criterias.GenericCriteria;
 import uz.elmurodov.dtos.task.TaskCreateDto;
+import uz.elmurodov.dtos.task.TaskDto;
 import uz.elmurodov.dtos.task.TaskUpdateDto;
 import uz.elmurodov.property.DatabaseProperties;
-import uz.elmurodov.repository.BaseRepository;
+import uz.elmurodov.repository.AbstractRepository;
+import uz.elmurodov.repository.GenericCrudRepository;
+import uz.elmurodov.repository.GenericRepository;
 import uz.elmurodov.security.SecurityHolder;
 import uz.elmurodov.security.task.Task;
 import uz.elmurodov.utils.BaseUtils;
@@ -15,60 +19,49 @@ import java.sql.Types;
 import java.util.List;
 
 
-public class TaskRepository extends BaseRepository<TaskCreateDto,
+public class TaskRepository extends AbstractRepository implements GenericCrudRepository<
+        TaskDto,
+        TaskCreateDto,
         TaskUpdateDto,
-        Task,
-        Long> {
-    private final DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
+        Long>, GenericRepository<TaskDto, GenericCriteria> {
 
     @Override
     public Long create(TaskCreateDto dto) {
-        String json = BaseUtils.gson.toJson(dto);
+        String json = gson.toJson(dto);
         prepareArguments(json, SecurityHolder.authUserSession.getId());
         return (long) callProcedure(property.get("task.create"), Types.BIGINT);
     }
 
     @Override
-    public boolean block(Long id) {
-        return true;
-    }
-
-    @Override
-    public boolean unblock(Long id) {
-        return true;
-    }
-
-    @Override
-    public boolean update(TaskUpdateDto dto) {
-        String json = BaseUtils.gson.toJson(dto);
+    public Boolean update(TaskUpdateDto dto) {
+        String json = gson.toJson(dto);
         prepareArguments(json, SecurityHolder.authUserSession.getId());
         return (boolean) callProcedure("task.update", Types.BOOLEAN);
     }
 
     @Override
-    public boolean delete(Long id) {
+    public void delete(Long id) {
         prepareArguments(SecurityHolder.authUserSession.getId(), id);
-        return (boolean) callProcedure(property.get("task.delete"), Types.BOOLEAN);
+        callProcedure(property.get("task.delete"), -1);
     }
 
     @Override
-    public Task get(Long id) {
+    public TaskDto get(Long id) {
         prepareArguments(id);
         String jsonData = (String) callProcedure(property.get("task.get"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(jsonData, Task.class);
+        return gson.fromJson(jsonData, TaskDto.class);
     }
 
     @Override
-    public List<Task> list() {
-        Type taskList = new TypeToken<List<Task>>() {
-        }.getType();
+    public List<TaskDto> list(GenericCriteria criteria) {
         prepareArguments(SecurityHolder.authUserSession.getId());
         String dataJson = (String) callProcedure(property.get("task.list.user"), Types.VARCHAR);
-        return BaseUtils.gson.fromJson(dataJson, taskList);
+        return gson.fromJson(dataJson, new TypeToken<List<TaskDto>>() {
+        }.getType());
     }
-
+/*
     public void addTask(TaskUpdateDto dto) {
-        prepareArguments(BaseUtils.gson.toJson(dto), SecurityHolder.authUserSession.getId());
+        prepareArguments(gson.toJson(dto), SecurityHolder.authUserSession.getId());
         callProcedure("add.comment", Types.BIGINT);
-    }
+    }*/
 }

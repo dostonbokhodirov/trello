@@ -14,24 +14,25 @@ public class CustomerSQLException extends RuntimeException {
 
     public CustomerSQLException(String message, Throwable cause) {
         super(message, cause);
+        this.friendlyMessage = message;
         initMessage();
     }
 
     private void initMessage() {
-        this.friendlyMessage = null;
-        String message = super.getMessage();
-        String systemMessage = message.trim();
-        try {
-            friendlyMessage = systemMessage.substring(systemMessage.lastIndexOf("ERROR: ") + 7, systemMessage.indexOf("Where")).trim();
-            if (friendlyMessage.isEmpty()) {
-                friendlyMessage = systemMessage.substring(systemMessage.lastIndexOf("detail: ") + 8, systemMessage.indexOf("hint: ")).trim();
-            }
-            if (friendlyMessage.isEmpty()) {
-                friendlyMessage = systemMessage.substring(systemMessage.lastIndexOf("hint: ") + 6).trim();
-            }
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+//        this.friendlyMessage = null;
+//        String message = super.getMessage();
+//        String systemMessage = message.trim();
+//        try {
+//            friendlyMessage = systemMessage.substring(systemMessage.lastIndexOf("ERROR: ") + 7, systemMessage.indexOf("Where")).trim();
+//            if (friendlyMessage.isEmpty()) {
+//                friendlyMessage = systemMessage.substring(systemMessage.lastIndexOf("detail: ") + 8, systemMessage.indexOf("hint: ")).trim();
+//            }
+//            if (friendlyMessage.isEmpty()) {
+//                friendlyMessage = systemMessage.substring(systemMessage.lastIndexOf("hint: ") + 6).trim();
+//            }
+//        } catch (Exception ex) {
+//            ex.printStackTrace();
+//        }
         if (friendlyMessage.contains("ERROR_CODE_INTERNAL"))
             status = HttpStatus.HTTP_500;
         else if (friendlyMessage.contains("ERROR_CODE_BAD_REQUEST"))

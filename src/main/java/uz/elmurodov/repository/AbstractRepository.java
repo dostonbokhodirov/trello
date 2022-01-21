@@ -1,45 +1,25 @@
 package uz.elmurodov.repository;
 
+import com.google.gson.Gson;
 import lombok.SneakyThrows;
 import uz.elmurodov.container.UNIContainer;
-import uz.elmurodov.dtos.GenericBaseDto;
-import uz.elmurodov.dtos.GenericDto;
 import uz.elmurodov.exception.CustomerSQLException;
-import uz.elmurodov.security.Auditable;
+import uz.elmurodov.property.DatabaseProperties;
+import uz.elmurodov.settings.Types;
 
 import java.io.Serializable;
-import java.sql.*;
-import java.util.List;
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Objects;
 
-/**
- *
- * @param <CR> -> create dto
- * @param <D> -> update dto
- * @param <E> -> entity
- * @param <K> -> key
- */
-public abstract class BaseRepository<
-        CR extends GenericBaseDto,
-        D extends GenericDto,
-        E extends Auditable,
-        K extends Serializable> {
-    public abstract K create(CR dto);
-
-    public abstract boolean block(K id);
-
-    public abstract boolean unblock(K id);
-
-    public abstract boolean update(D dto);
-
-    public abstract boolean delete(K id);
-
-    public abstract E get(K id);
-
-    public abstract List<E> list();
-
+public abstract class AbstractRepository {
 
     protected Connection connection = UNIContainer.getBean(Connection.class);
     private Object[] args;
+    protected DatabaseProperties property = UNIContainer.getBean(DatabaseProperties.class);
+    protected Gson gson = UNIContainer.getBean(Gson.class);
 
     protected Serializable callProcedure(String query, int outType) {
         try {
@@ -52,13 +32,18 @@ public abstract class BaseRepository<
         }
     }
 
+    protected <T> T callProcedure(String query, int outType, Class<T> clazz) {
+        return (T) callProcedure(query, outType);
+    }
+
     @SneakyThrows
     private Serializable prepareResultSet(ResultSet resultSet, int outType) {
-        if (resultSet.next()) {
+        if (Objects.nonNull(resultSet) && resultSet.next()) {
             return switch (outType) {
                 case Types.VARCHAR -> resultSet.getString(1);
                 case Types.BIGINT -> resultSet.getLong(1);
                 case Types.BOOLEAN -> resultSet.getBoolean(1);
+                case Types.VOID -> -1;
                 default -> throw new IllegalStateException("Unexpected value: " + outType);
             };
         }
@@ -75,5 +60,4 @@ public abstract class BaseRepository<
     protected void prepareArguments(Object... args) {
         this.args = args;
     }
-
 }

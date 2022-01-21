@@ -6,12 +6,11 @@ import uz.elmurodov.dtos.GenericBaseDto;
 
 @Data
 public class ColumnCreateDto implements GenericBaseDto {
-	private String emoji;
+    private String emoji;
+    @SerializedName("project_id")
+    private long projectId;
 
-	@SerializedName("project_id")
-	private int projectId;
+    private String name;
 
-	private String name;
-
-	private int order;
+    private int order;
 }

@@ -1,14 +1,17 @@
 package uz.elmurodov.dtos.column;
 
-import lombok.Data;
 import uz.elmurodov.dtos.GenericDto;
+import uz.elmurodov.dtos.task.TaskDto;
 
-@Data
-public class ColumnUpdateDto extends GenericDto {
+import java.util.List;
+
+public class ColumnDto extends GenericDto {
 
     private String emoji;
 
     private String name;
 
     private int order;
+
+    private List<TaskDto> tasks;
 }

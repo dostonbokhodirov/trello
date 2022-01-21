@@ -7,7 +7,7 @@ import uz.elmurodov.security.Auditable;
 import uz.elmurodov.security.organization.Organization;
 
 @Data
-public class AuthUser implements Auditable {
+public class Session implements Auditable {
 	private String code;
 
 	@SerializedName("is_super_user")

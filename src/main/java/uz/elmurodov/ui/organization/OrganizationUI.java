@@ -1,3 +1,4 @@
+/*
 package uz.elmurodov.ui.organization;
 
 import uz.elmurodov.container.UNIContainer;
@@ -87,3 +88,4 @@ public class OrganizationUI extends BaseUI<OrganizationService> {
         }
     }
 }
+*/
